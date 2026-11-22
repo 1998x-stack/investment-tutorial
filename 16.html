@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第16章 风险管理</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +43,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第16章 风险管理</h2>
+        <h1>第16章 风险管理</h1>
 
         <p>在进入正题之前，我想先问你一个扎心的问题：你做过最差的一笔投资决策是什么？</p>
 
@@ -64,6 +67,24 @@
 
         <p>VaR（Value at Risk，风险价值）是金融风险管理中最基础、最广泛使用的指标。它的定义是：在给定的置信水平和持有期内，投资组合可能的最大损失。比如，"日VaR=100万元，置信水平99%"意味着：在正常情况下，一天内亏损超过100万元的概率只有1%。</p>
 
+        <div class="math-equation" role="group" aria-label="参数法 VaR 与 CVaR 定义">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="VaR 与 CVaR 公式，可以横向滚动">
+                <math display="block" aria-label="参数法下置信水平 alpha 的 VaR 等于负的，均值加标准差乘以标准正态的 1 减 alpha 分位数">
+                    <mrow>
+                        <msub><mi>VaR</mi><mi>α</mi></msub><mo>=</mo>
+                        <mo>−</mo><mo>(</mo><mi>μ</mi><mo>+</mo><mi>σ</mi><msub><mi>z</mi><mrow><mn>1</mn><mo>−</mo><mi>α</mi></mrow></msub><mo>)</mo>
+                    </mrow>
+                </math>
+                <math display="block" aria-label="CVaR 等于损失超过 VaR 阈值时的条件期望损失">
+                    <mrow>
+                        <msub><mi>CVaR</mi><mi>α</mi></msub><mo>=</mo>
+                        <mi>E</mi><mo>[</mo><mi>L</mi><mo>∣</mo><mi>L</mi><mo>≥</mo><msub><mi>VaR</mi><mi>α</mi></msub><mo>]</mo>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="μ 为收益率均值"><mi>μ</mi></math> 为收益率均值，<math class="math-inline" aria-label="σ 为收益率标准差"><mi>σ</mi></math> 为标准差，<math class="math-inline" aria-label="z 为标准正态分位数"><mi>z</mi></math> 为标准正态分位数，<math class="math-inline" aria-label="L 为损失"><mi>L</mi></math> 为损失。</p>
+            </div>
+        </div>
+
         <p>计算VaR有三种主流方法，各有优劣：</p>
 
         <table>
@@ -76,6 +97,29 @@
                 <tr><td>蒙特卡洛模拟法</td><td>假设收益率的随机过程，生成大量模拟路径，计算分位数</td><td>能处理复杂的非线性风险（如期权组合）</td><td>计算量大，模型风险高（取决于假设的准确性）</td></tr>
             </tbody>
         </table>
+
+        <figure>
+            <svg role="img" aria-labelledby="var-title var-desc" viewBox="0 0 840 340" xmlns="http://www.w3.org/2000/svg">
+                <title id="var-title">收益率分布、VaR 与 CVaR 的关系</title>
+                <desc id="var-desc">收益率分布曲线下方，左侧尾部被截断并涂色；右侧竖直虚线为 VaR 阈值，尾部阴影的平均位置为 CVaR。</desc>
+                <rect width="840" height="340" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <line x1="80" y1="290" x2="800" y2="290" stroke="#94a3b8" stroke-width="2"/>
+                    <path d="M 80 290 C 240 290 300 70 440 70 C 580 70 640 290 800 290" fill="none" stroke="#2563b8" stroke-width="3"/>
+                    <path d="M 80 290 C 130 288 165 276 200 250 L 200 290 Z" fill="#f3b0a4" opacity="0.85"/>
+                    <line x1="200" y1="60" x2="200" y2="290" stroke="#c0504d" stroke-width="2.5" stroke-dasharray="6 5"/>
+                    <text x="210" y="80" font-size="14" font-weight="700" fill="#c0504d">VaR 阈值（95%）</text>
+                    <line x1="140" y1="312" x2="200" y2="312" stroke="#8a3f3d" stroke-width="3"/>
+                    <line x1="140" y1="306" x2="140" y2="318" stroke="#8a3f3d" stroke-width="3"/>
+                    <line x1="200" y1="306" x2="200" y2="318" stroke="#8a3f3d" stroke-width="3"/>
+                    <text x="140" y="332" font-size="13" fill="#8a3f3d">CVaR：尾部平均损失</text>
+                    <text x="794" y="316" text-anchor="end" font-size="13" fill="#53676d">收益率 →</text>
+                    <text x="86" y="60" font-size="13" fill="#53676d">频率</text>
+                    <text x="440" y="300" text-anchor="middle" font-size="13" fill="#53676d">均值</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 16-1</strong>　收益率分布（灰线）与左侧尾部（红色阴影）。虚线为 95% 置信水平的 VaR 阈值；阴影区域的均值即 CVaR。VaR 只给出尾部“门槛”，而 CVaR 描述跳门槛后的平均损失。曲线为教学示意，非真实市场分布。</figcaption>
+        </figure>
 
         <h3>Python实现VaR</h3>
 
@@ -254,7 +298,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="17.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
