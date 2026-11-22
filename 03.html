@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第3章 债券</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +43,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第3章 债券</h2>
+        <h1>第3章 债券</h1>
 
         <p>大家好！上一章我们讲了股票——高收益、高波动的"热血青年"。这一章我们来看它的反面——债券，那个看起来有点"无聊"但每个投资组合都离不开的"稳重中年人"。</p>
 
@@ -94,6 +97,8 @@
             </tbody>
         </table>
 
+        <p class="eq-label">表中“中国典型收益”为本课程<strong>教学示意</strong>区间，用于展示不同类型债券的相对收益水平，非精确市场报价。</p>
+
         <h3>可转债</h3>
         <p>可转债（Convertible Bond）是一种"下有保底、上不封顶"的债券。它兼具债券和股票的特性：在股价低迷时，你持有债券，收取固定利息；在股价上涨时，你可以按约定价格将债券转换成股票，分享股价上涨的收益。2021年，可转债市场在A股大放异彩——有的可转债一年内涨了300%。但注意：可转债的价格也可能跌破面值，尤其是当正股持续下跌时。</p>
 
@@ -133,12 +138,57 @@
 
         <p>久期的实用价值：如果你预期利率即将上升，你应该<strong>缩短久期</strong>（卖出长期债券、买入短期债券），以减少价格下跌的损失。反之，如果你预期利率下降，应该<strong>拉长久期</strong>以获取最大的价格上涨收益。</p>
 
+        <div class="math-equation" role="group" aria-label="久期与凸性近似公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="久期与凸性公式，可以横向滚动">
+                <math display="block" aria-label="债券价格变化率约等于负的修正久期乘以收益率变化，加二分之一凸性乘以收益率变化的平方">
+                    <mrow>
+                        <mfrac><mrow><mi>Δ</mi><mi>P</mi></mrow><mi>P</mi></mfrac><mo>≈</mo>
+                        <mo>−</mo><msub><mi>D</mi><mi>mod</mi></msub><mo>×</mo><mi>Δ</mi><mi>y</mi>
+                        <mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>C</mi><msup><mrow><mo>(</mo><mi>Δ</mi><mi>y</mi><mo>)</mo></mrow><mn>2</mn></msup>
+                    </mrow>
+                </math>
+                <math display="block" aria-label="麦考利久期等于各期现金流现值乘以时间后求和，再除以债券价格">
+                    <mrow>
+                        <msub><mi>D</mi><mi>mac</mi></msub><mo>=</mo>
+                        <mfrac>
+                            <mrow><munderover><mo>Σ</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>t</mi><mo>×</mo><mi>PV</mi><mo>(</mo><mi>C</mi><msub><mi>F</mi><mi>t</mi></msub><mo>)</mo></mrow>
+                            <mi>P</mi>
+                        </mfrac>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="D mod 为修正久期"><msub><mi>D</mi><mi>mod</mi></msub></math> 为修正久期，<math class="math-inline" aria-label="C 为凸性"><mi>C</mi></math> 为凸性，<math class="math-inline" aria-label="Δy 为收益率变化"><mrow><mi>Δ</mi><mi>y</mi></mrow></math> 为收益率变化，<math class="math-inline" aria-label="PV 为现值"><mi>PV</mi></math> 为现值。</p>
+            </div>
+        </div>
+
         <h3>凸性（Convexity）</h3>
         <p>久期是一个线性近似，但债券价格与收益率的关系实际上是<strong>凸的</strong>（Convex）——也就是说，利率下降时价格上升的幅度大于利率上升时价格下跌的幅度。这种不对称性就是凸性。</p>
 
         <div class="highlight">
             <strong>实战中的应用：</strong>退休基金和保险公司常用<strong>免疫策略（Immunization）</strong>来管理利率风险——通过匹配资产和负债的久期，使利率变化对组合净值的影响最小化。想象一下，如果某养老基金10年后要支付1亿元的退休金，它就需要构建一个久期为10年的债券组合，这样即使利率变化，组合的价值变化也能与负债的现值变化互相抵消。
         </div>
+
+        <figure>
+            <svg role="img" aria-labelledby="conv-title conv-desc" viewBox="0 0 840 380" xmlns="http://www.w3.org/2000/svg">
+                <title id="conv-title">债券价格-收益率曲线的凸性</title>
+                <desc id="conv-desc">横轴为收益率，纵轴为债券价格。实际价格曲线向下且向右凸，一条切线代表久期的线性近似；曲线总在切线之上，两者之差即凸性收益。</desc>
+                <rect width="840" height="380" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <line x1="90" y1="340" x2="800" y2="340" stroke="#94a3b8" stroke-width="2"/>
+                    <line x1="90" y1="340" x2="90" y2="40" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="794" y="366" text-anchor="end" font-size="13" fill="#53676d">收益率 y →</text>
+                    <text x="96" y="38" font-size="13" fill="#53676d">↑ 债券价格 P</text>
+                    <path d="M 120 90 Q 520 250 760 320" fill="none" stroke="#2563b8" stroke-width="4"/>
+                    <line x1="200" y1="127" x2="760" y2="328" stroke="#d06d4d" stroke-width="2.5" stroke-dasharray="8 6"/>
+                    <circle cx="480" cy="227" r="7" fill="#1e293b"/>
+                    <text x="140" y="90" font-size="15" font-weight="700" fill="#2563b8">实际价格曲线（凸）</text>
+                    <text x="215" y="118" font-size="14" fill="#8a5a3f">久期线性近似（切线）</text>
+                    <line x1="690" y1="300" x2="690" y2="315" stroke="#147f80" stroke-width="3"/>
+                    <text x="700" y="312" font-size="13" fill="#147f80">凸性收益</text>
+                    <text x="120" y="360" font-size="13" fill="#53676d">（切点对应当前收益率）</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 3-1</strong>　债券价格-收益率曲线的凸性。实线为实际价格曲线（向下且向右凸），虚线为久期的线性近似切线。因为曲线在切线之上，利率下降带来的价格上涨幅度大于同等幅度利率上升的下跌幅度——这段差额即凸性收益。曲线为教学示意。</figcaption>
+        </figure>
 
         <h2>3.5 信用评级</h2>
 
@@ -182,7 +232,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="04.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
