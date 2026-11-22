@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html" class="active">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第1章 投资学导论</h2>
+        <h1>第1章 投资学导论</h1>
 
         <p>大家好，欢迎来到投资学课堂！在开始之前，我想先问你一个问题：你有没有在某个深夜刷到一条理财帖子，点进去一看，满屏的K线图、PE、PB、ROE，你一个都看不懂，最后默默退出了？又或者，你身边有人跟你说"我买基金亏了30%"，而你心里想的是——基金还能亏这么多？</p>
 
@@ -123,11 +125,70 @@
 
         <p>整门课程围绕三个核心问题展开：</p>
 
+        <figure>
+            <svg role="img" aria-labelledby="sancore-title sancore-desc" viewBox="0 0 840 300" xmlns="http://www.w3.org/2000/svg">
+                <title id="sancore-title">投资学的三个核心问题</title>
+                <desc id="sancore-desc">收益与风险的权衡、货币的时间价值、资源配置三个问题并列，共同构成后续章节的理论主线。</desc>
+                <rect width="840" height="300" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <g>
+                        <rect x="20" y="30" width="253" height="240" rx="16" fill="#e0edff"/>
+                        <circle cx="146" cy="92" r="34" fill="#2563b8"/>
+                        <text x="146" y="100" text-anchor="middle" font-size="26" fill="#ffffff">⚖</text>
+                        <text x="146" y="160" text-anchor="middle" font-size="18" font-weight="700">收益–风险权衡</text>
+                        <text x="146" y="192" text-anchor="middle" font-size="14" fill="#3b5f8a">想收获更高收益</text>
+                        <text x="146" y="216" text-anchor="middle" font-size="14" fill="#3b5f8a">必须承担更高风险</text>
+                        <text x="146" y="248" text-anchor="middle" font-size="13" fill="#53676d">第 7–11 章</text>
+                    </g>
+                    <g>
+                        <rect x="293" y="30" width="253" height="240" rx="16" fill="#fef3e2"/>
+                        <circle cx="419" cy="92" r="34" fill="#d06d4d"/>
+                        <text x="419" y="100" text-anchor="middle" font-size="26" fill="#ffffff">⏳</text>
+                        <text x="419" y="160" text-anchor="middle" font-size="18" font-weight="700">货币时间价值</text>
+                        <text x="419" y="192" text-anchor="middle" font-size="14" fill="#8a5a3f">今天的 1 元</text>
+                        <text x="419" y="216" text-anchor="middle" font-size="14" fill="#8a5a3f">不等于明天的 1 元</text>
+                        <text x="419" y="248" text-anchor="middle" font-size="13" fill="#53676d">贯穿所有估值模型</text>
+                    </g>
+                    <g>
+                        <rect x="566" y="30" width="253" height="240" rx="16" fill="#f1e9ff"/>
+                        <circle cx="692" cy="92" r="34" fill="#7461ba"/>
+                        <text x="692" y="100" text-anchor="middle" font-size="26" fill="#ffffff">⛃</text>
+                        <text x="692" y="160" text-anchor="middle" font-size="18" font-weight="700">资源配置</text>
+                        <text x="692" y="192" text-anchor="middle" font-size="14" fill="#5f4f9a">有限资金如何分配</text>
+                        <text x="692" y="216" text-anchor="middle" font-size="14" fill="#5f4f9a">给定风险下最大化收益</text>
+                        <text x="692" y="248" text-anchor="middle" font-size="13" fill="#53676d">第 8 章</text>
+                    </g>
+                </g>
+            </svg>
+            <figcaption><strong>图 1-1</strong>　投资学的三个核心问题：收益与风险的权衡、货币的时间价值、资源配置。它们构成本课程第 7 章到第 11 章的理论主线，其余章节都在回答这三个问题的具体形态。图为本课程教学示意。</figcaption>
+        </figure>
+
         <h3>问题一：收益与风险的权衡（Risk-Return Tradeoff）</h3>
         <p>这是投资学最核心的命题。<strong>天下没有免费的午餐</strong>——想要获得更高的预期收益，就必须承担更高的风险。但"更高风险"并不保证"更高收益"，它只是提供了获得更高收益的可能性，同时也伴随着更大亏损的可能。理解并量化这个权衡关系，是第7章到第11章的核心内容。</p>
 
         <h3>问题二：时间价值（Time Value of Money）</h3>
         <p>今天的100元不等于明天的100元。因为你可以将今天的100元进行投资，获得无风险收益（比如存入银行或购买国债）。因此，未来的现金流需要<strong>折现</strong>（Discount）到今天来比较。这个理念贯穿整本书的所有估值模型：</p>
+
+        <div class="math-equation" role="group" aria-label="现值与终值公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="现值与终值公式，可以横向滚动">
+                <math display="block" aria-label="终值等于现值乘以 1 加利率的 n 次方">
+                    <mrow>
+                        <mi>FV</mi><mo>=</mo><mi>PV</mi><mo>×</mo>
+                        <msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mi>n</mi></msup>
+                    </mrow>
+                </math>
+                <math display="block" aria-label="现值等于终值除以 1 加利率的 n 次方">
+                    <mrow>
+                        <mi>PV</mi><mo>=</mo>
+                        <mfrac>
+                            <mi>FV</mi>
+                            <msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mi>n</mi></msup>
+                        </mfrac>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="r 为每期收益率"><mi>r</mi></math> 为每期收益率，<math class="math-inline" aria-label="n 为期数"><mi>n</mi></math> 为期数。</p>
+            </div>
+        </div>
 
         <pre><code># 时间价值的核心公式：现值与终值
 # 假设年化收益率 r = 5%，投资期限 n = 10 年
@@ -206,7 +267,8 @@ PV = 100 / (1 + 0.05)^10  # = 61.39 元</code></pre>
             <a href="index.html">📖 返回目录</a>
             <a href="02.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
