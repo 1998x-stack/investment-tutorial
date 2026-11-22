@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第19章 期权定价与策略</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +43,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第19章 期权定价与策略</h2>
+        <h1>第19章 期权定价与策略</h1>
 
         <p>想象这样一个场景：你花100元买了一张"保险"，如果三个月后你持有的某只股票跌了，保险公司赔你全部损失；如果股票涨了，你只损失这100元"保费"，上涨收益全部归你。听起来像是天上掉馅饼？这就是期权的魅力。</p>
 
@@ -69,6 +72,35 @@
         <p><strong>到期日（Expiration Date）：</strong>期权的有效期限。美式期权可以在到期前的任何交易日行权，欧式期权只能在到期日当天行权。在中国期权市场（如上证50ETF期权），通常采用欧式行权方式。</p>
 
         <p><strong>内在价值（Intrinsic Value）：</strong>期权立即行权所能获得的收益。对于认购期权，内在价值 = max(标的价格 - 行权价, 0)；对于认沽期权，内在价值 = max(行权价 - 标的价格, 0)。期权状态分为实值（In-the-Money）、平值（At-the-Money）和虚值（Out-of-the-Money）。</p>
+
+        <figure>
+            <svg role="img" aria-labelledby="payoff-title payoff-desc" viewBox="0 0 840 360" xmlns="http://www.w3.org/2000/svg">
+                <title id="payoff-title">认购与认沽期权到期的收益结构</title>
+                <desc id="payoff-desc">左图展示认购期权多头到期收益，标的价格高于行权价后线性上升；右图展示认沽期权多头到期收益，标的价格低于行权价后线性下降至零。</desc>
+                <rect width="840" height="360" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <text x="60" y="34" font-size="16" font-weight="700" fill="#147f80">认购期权多头（Long Call）</text>
+                    <line x1="60" y1="300" x2="380" y2="300" stroke="#94a3b8" stroke-width="2"/>
+                    <line x1="60" y1="300" x2="60" y2="70" stroke="#94a3b8" stroke-width="2"/>
+                    <line x1="220" y1="80" x2="220" y2="300" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="5 5"/>
+                    <path d="M 60 300 L 220 300 L 380 80" fill="none" stroke="#147f80" stroke-width="4"/>
+                    <text x="228" y="296" font-size="13" fill="#53676d">K=50</text>
+                    <text x="384" y="316" text-anchor="end" font-size="13" fill="#53676d">标的价 S →</text>
+                    <text x="66" y="64" font-size="13" fill="#53676d">收益</text>
+                    <text x="70" y="120" font-size="15" font-weight="700" fill="#147f80">max(S−K, 0)</text>
+                    <text x="470" y="34" font-size="16" font-weight="700" fill="#d06d4d">认沽期权多头（Long Put）</text>
+                    <line x1="470" y1="300" x2="790" y2="300" stroke="#94a3b8" stroke-width="2"/>
+                    <line x1="470" y1="300" x2="470" y2="70" stroke="#94a3b8" stroke-width="2"/>
+                    <line x1="630" y1="80" x2="630" y2="300" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="5 5"/>
+                    <path d="M 470 80 L 630 300 L 790 300" fill="none" stroke="#d06d4d" stroke-width="4"/>
+                    <text x="638" y="296" font-size="13" fill="#53676d">K=50</text>
+                    <text x="794" y="316" text-anchor="end" font-size="13" fill="#53676d">标的价 S →</text>
+                    <text x="476" y="64" font-size="13" fill="#53676d">收益</text>
+                    <text x="480" y="120" font-size="15" font-weight="700" fill="#d06d4d">max(K−S, 0)</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 19-1</strong>　认购与认沽期权多头在到期日的收益结构（忽略期权费）。认购期权在标的价高于行权价 K 后收益随上涨线性增加；认沽期权反之，标的价越低收益越高。图中 K=50 为本课程<strong>教学示意</strong>。</figcaption>
+        </figure>
 
         <p><strong>时间价值（Time Value）：</strong>期权价格减去内在价值的部分。时间价值反映了"未来标的价格波动可能带来收益"的预期。距离到期日越远、波动率越大，时间价值越高。随着到期日临近，时间价值加速衰减——这就是我们常说的"时间是你的敌人，如果你是期权买方"。</p>
 
@@ -105,25 +137,63 @@
         <h3>BS公式解读</h3>
         <p>对于不支付股息的欧式认购期权，定价公式为：</p>
 
-        <pre><code>C = S₀ × N(d₁) - K × e^(-rT) × N(d₂)
-
-其中：
-d₁ = [ln(S₀/K) + (r + σ²/2)T] / (σ√T)
-d₂ = d₁ - σ√T
-
-参数含义：
-S₀ = 当前标的价格
-K  = 行权价
-r  = 无风险利率
-σ  = 波动率（标准差）
-T  = 剩余期限（年）
-N(·) = 标准正态分布的累积分布函数</code></pre>
+        <div class="math-equation" role="group" aria-label="Black-Scholes 欧式认购期权定价公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="Black-Scholes 公式，可以横向滚动">
+                <math display="block" aria-label="认购期权价格等于标的价格乘以 N d1，减去行权价乘以 e 的负 rT 次方再乘以 N d2">
+                    <mrow>
+                        <mi>C</mi><mo>=</mo>
+                        <msub><mi>S</mi><mn>0</mn></msub><mi>N</mi><mo>(</mo><msub><mi>d</mi><mn>1</mn></msub><mo>)</mo>
+                        <mo>−</mo>
+                        <mi>K</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>r</mi><mi>T</mi></mrow></msup><mi>N</mi><mo>(</mo><msub><mi>d</mi><mn>2</mn></msub><mo>)</mo>
+                    </mrow>
+                </math>
+                <math display="block" aria-label="d1 等于 ln S0 除以 K 加上 r 加二分之 sigma 平方乘以 T，再除以 sigma 乘以根号 T">
+                    <mrow>
+                        <msub><mi>d</mi><mn>1</mn></msub><mo>=</mo>
+                        <mfrac>
+                            <mrow><mi>ln</mi><mo>(</mo><msub><mi>S</mi><mn>0</mn></msub><mo>/</mo><mi>K</mi><mo>)</mo><mo>+</mo><mo>(</mo><mi>r</mi><mo>+</mo><mfrac><msup><mi>σ</mi><mn>2</mn></msup><mn>2</mn></mfrac><mo>)</mo><mi>T</mi></mrow>
+                            <mrow><mi>σ</mi><msqrt><mi>T</mi></msqrt></mrow>
+                        </mfrac>
+                    </mrow>
+                </math>
+                <math display="block" aria-label="d2 等于 d1 减去 sigma 乘以根号 T">
+                    <mrow>
+                        <msub><mi>d</mi><mn>2</mn></msub><mo>=</mo><msub><mi>d</mi><mn>1</mn></msub><mo>−</mo><mi>σ</mi><msqrt><mi>T</mi></msqrt>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="S0 为当前标的价格"><msub><mi>S</mi><mn>0</mn></msub></math> 为当前标的价格，<math class="math-inline" aria-label="K 为行权价"><mi>K</mi></math> 为行权价，<math class="math-inline" aria-label="r 为无风险利率"><mi>r</mi></math> 为无风险利率，<math class="math-inline" aria-label="σ 为波动率"><mi>σ</mi></math> 为波动率，<math class="math-inline" aria-label="T 为剩余期限年"><mi>T</mi></math> 为剩余期限（年），<math class="math-inline" aria-label="N 为标准正态累积分布函数"><mi>N</mi></math> 为标准正态累积分布函数。</p>
+            </div>
+        </div>
 
         <p>公式的解读可以从两个角度理解：<strong>N(d₁)</strong> 可以看作是期权到期实值的概率的某种调整版本，<strong>N(d₂)</strong> 则是期权在风险中性世界中被行权的概率。整个公式本质上是"预期收益的现值"。</p>
 
         <p>对于认沽期权，利用看涨-看跌平价关系（Put-Call Parity）可以快速得到：</p>
 
-        <pre><code>P = K × e^(-rT) × N(-d₂) - S₀ × N(-d₁)</code></pre>
+        <div class="math-equation" role="group" aria-label="看跌-看涨平价下的认沽期权价格">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="认沽期权价格公式，可以横向滚动">
+                <math display="block" aria-label="认沽期权价格等于行权价乘以 e 的负 rT 次方乘 N 负 d2，减去标的价格乘 N 负 d1">
+                    <mrow>
+                        <mi>P</mi><mo>=</mo>
+                        <mi>K</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>r</mi><mi>T</mi></mrow></msup><mi>N</mi><mo>(</mo><mo>−</mo><msub><mi>d</mi><mn>2</mn></msub><mo>)</mo>
+                        <mo>−</mo>
+                        <msub><mi>S</mi><mn>0</mn></msub><mi>N</mi><mo>(</mo><mo>−</mo><msub><mi>d</mi><mn>1</mn></msub><mo>)</mo>
+                    </mrow>
+                </math>
+            </div>
+        </div>
+
+        <div id="bs-widget" style="margin:20px 0;padding:16px 18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;">
+            <p style="margin:0 0 10px;"><strong>动手算一算：Black-Scholes 期权价格</strong>（输入可调，实时重算；N(x) 用多项式近似）</p>
+            <div style="display:flex;flex-wrap:wrap;gap:12px 18px;">
+                <label>S₀ <input type="number" id="bsS" value="100" step="1" style="width:80px;"></label>
+                <label>K <input type="number" id="bsK" value="100" step="1" style="width:80px;"></label>
+                <label>T（年） <input type="number" id="bsT" value="1" step="0.1" style="width:70px;"></label>
+                <label>r（%） <input type="number" id="bsR" value="3" step="0.1" style="width:70px;"></label>
+                <label>σ（%） <input type="number" id="bsV" value="20" step="1" style="width:70px;"></label>
+            </div>
+            <p style="margin:12px 0 6px;">认购价 C：<strong id="bsC">—</strong>　认沽价 P：<strong id="bsP">—</strong></p>
+            <button type="button" id="bsBtn" style="padding:6px 16px;border:1px solid #cbd5e1;border-radius:30px;background:#eef4ff;color:#1e3a5f;font-weight:600;cursor:pointer;">波动率 +5%，重新计算（当前 σ=20%）</button>
+        </div>
 
         <div class="tip">
             <strong>实用提示：</strong>实际交易中很少有人手动计算BS公式。所有交易软件都内置了期权定价计算器。你需要理解的是<strong>输入变量如何影响期权价格</strong>——这五个输入（S、K、T、r、σ）每变化一个，期权价格会怎么变？这正是下一节希腊字母要回答的问题。
@@ -218,8 +288,42 @@ N(·) = 标准正态分布的累积分布函数</code></pre>
             <a href="index.html">📖 返回目录</a>
             <a href="20.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
+<script>
+(function () {
+    var byId = function (id) { return document.getElementById(id); };
+    var S = byId('bsS'), K = byId('bsK'), T = byId('bsT'), r = byId('bsR'), v = byId('bsV');
+    if (!S) return;
+    var btn = byId('bsBtn'), cOut = byId('bsC'), pOut = byId('bsP');
+    function erf(z) {
+        var t = 1 / (1 + 0.3275911 * Math.abs(z));
+        var y = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-z * z);
+        return z >= 0 ? y : -y;
+    }
+    function N(x) { return 0.5 * (1 + erf(x / Math.SQRT2)); }
+    function calc() {
+        var s = +S.value, k = +K.value, t = +T.value, rr = (+r.value) / 100, sg = (+v.value) / 100;
+        if (!(s > 0 && k > 0 && t > 0 && sg > 0)) { cOut.textContent = pOut.textContent = '参数无效'; return; }
+        var d1 = (Math.log(s / k) + (rr + sg * sg / 2) * t) / (sg * Math.sqrt(t));
+        var d2 = d1 - sg * Math.sqrt(t);
+        var c = s * N(d1) - k * Math.exp(-rr * t) * N(d2);
+        var p = k * Math.exp(-rr * t) * N(-d2) - s * N(-d1);
+        cOut.textContent = c.toFixed(3);
+        pOut.textContent = p.toFixed(3);
+    }
+    ['input', 'change'].forEach(function (ev) {
+        [S, K, T, r, v].forEach(function (el) { el.addEventListener(ev, calc); });
+    });
+    btn.addEventListener('click', function () {
+        v.value = (+v.value + 5 > 80 ? 10 : +v.value + 5);
+        calc();
+        btn.textContent = '波动率 +5%，重新计算（当前 σ=' + v.value + '%）';
+    });
+    calc();
+})();
+</script>
 </body>
 </html>
