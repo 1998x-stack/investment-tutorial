@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第9章 资本资产定价模型</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +43,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第9章 资本资产定价模型</h2>
+        <h1>第9章 资本资产定价模型</h1>
 
         <p>想象这样一个场景：你和朋友讨论两只股票——茅台和某家刚上市的科技公司。茅台的预期年化收益大概在12%左右，科技公司可能高达20%。你的朋友说："科技公司收益更高，说明它更有价值。"你本能地觉得这个推理有问题，但说不清问题出在哪里。</p>
 
@@ -85,6 +88,29 @@ E(R_p) = R_f + [E(R_m) - R_f] / σ_m × σ_p
 
         <p>单个资产的风险由两部分构成：<strong>系统性风险（Systematic Risk）</strong>和<strong>非系统性风险（Idiosyncratic Risk）</strong>。非系统性风险可以通过分散化消除，因此市场不会为它提供溢价补偿。CAPM的核心洞见就是：<strong>资产的预期收益只与系统性风险相关</strong>。</p>
 
+        <div class="math-equation" role="group" aria-label="CAPM 证券市场线公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="CAPM 证券市场线公式，可以横向滚动">
+                <math display="block" aria-label="资产 i 的预期收益等于无风险利率，加上贝塔 i 乘以市场预期收益与无风险利率之差">
+                    <mrow>
+                        <mi>E</mi><mo>(</mo><msub><mi>R</mi><mi>i</mi></msub><mo>)</mo><mo>=</mo>
+                        <msub><mi>R</mi><mi>f</mi></msub><mo>+</mo>
+                        <msub><mi>β</mi><mi>i</mi></msub><mo>×</mo>
+                        <mo>(</mo><mi>E</mi><mo>(</mo><msub><mi>R</mi><mi>m</mi></msub><mo>)</mo><mo>−</mo><msub><mi>R</mi><mi>f</mi></msub><mo>)</mo>
+                    </mrow>
+                </math>
+                <math display="block" aria-label="贝塔 i 等于资产 i 与市场收益的协方差，除以市场收益的方差">
+                    <mrow>
+                        <msub><mi>β</mi><mi>i</mi></msub><mo>=</mo>
+                        <mfrac>
+                            <mrow><mi>Cov</mi><mo>(</mo><msub><mi>R</mi><mi>i</mi></msub><mo>,</mo><msub><mi>R</mi><mi>m</mi></msub><mo>)</mo></mrow>
+                            <mrow><mi>Var</mi><mo>(</mo><msub><mi>R</mi><mi>m</mi></msub><mo>)</mo></mrow>
+                        </mfrac>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="R f 为无风险利率"><msub><mi>R</mi><mi>f</mi></msub></math> 为无风险利率，<math class="math-inline" aria-label="R m 为市场组合收益"><msub><mi>R</mi><mi>m</mi></msub></math> 为市场组合收益，<math class="math-inline" aria-label="贝塔 i 为系统性风险暴露"><msub><mi>β</mi><mi>i</mi></msub></math> 为系统性风险暴露。</p>
+            </div>
+        </div>
+
         <pre><code># CAPM的核心公式：证券市场线（SML）
 E(R_i) = R_f + β_i × (E(R_m) - R_f)
 
@@ -114,6 +140,8 @@ E(R_i) = R_f + β_i × (E(R_m) - R_f)
             </tbody>
         </table>
 
+        <p class="eq-label">表中 β 数值仅用于展示估计窗口对 β 的影响，为本课程<strong>教学示意</strong>，非特定券商或个股的实测值。</p>
+
         <p>可以看到，同一只股票的β会随着选取的时间窗口不同而显著变化。这就是为什么行业实践中常采用<strong>调整β（Adjusted Beta）</strong>——将原始β向1.0"收缩"，以提高预测能力。Bloomberg和Barra等数据供应商都提供调整后的β。</p>
 
         <div class="tip">
@@ -123,6 +151,34 @@ E(R_i) = R_f + β_i × (E(R_m) - R_f)
         <h2>9.3 证券市场线与均衡定价</h2>
 
         <p>SML是一条穿过市场组合和β坐标的直线。当市场处于均衡状态时，所有资产都应该落在SML上。如果一个点在SML上方，说明它的预期收益高于理论值——<strong>被低估</strong>（买入机会）；如果在SML下方，则<strong>被高估</strong>（卖出或回避）。</p>
+
+        <figure>
+            <svg role="img" aria-labelledby="sml-title sml-desc" viewBox="0 0 840 420" xmlns="http://www.w3.org/2000/svg">
+                <title id="sml-title">证券市场线（SML）与错误定价</title>
+                <desc id="sml-desc">横轴为贝塔，纵轴为预期收益。证券市场线从无风险利率出发，斜率为市场风险溢价；市场组合位于贝塔等于 1 处。位于直线之上的点被低估，位于直线之下的点被高估。</desc>
+                <rect width="840" height="420" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <line x1="90" y1="380" x2="810" y2="380" stroke="#94a3b8" stroke-width="2"/>
+                    <line x1="90" y1="380" x2="90" y2="30" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="804" y="408" text-anchor="end" font-size="14" fill="#53676d">β（系统性风险）→</text>
+                    <text x="96" y="28" font-size="14" fill="#53676d">↑ 预期收益 E(R)</text>
+                    <line x1="90" y1="339" x2="790" y2="58" stroke="#147f80" stroke-width="4"/>
+                    <text x="620" y="110" font-size="15" font-weight="700" fill="#147f80">SML 证券市场线</text>
+                    <circle cx="90" cy="339" r="7" fill="#1e293b"/>
+                    <text x="100" y="332" font-size="14" fill="#53676d">R_f = 1.8%</text>
+                    <circle cx="440" cy="199" r="9" fill="#2563b8"/>
+                    <text x="432" y="182" text-anchor="end" font-size="14" font-weight="700" fill="#2563b8">市场组合 β=1，E(R_m)=8%</text>
+                    <circle cx="510" cy="131" r="9" fill="#d06d4d"/>
+                    <text x="522" y="120" font-size="14" fill="#8a5a3f">被低估（点在线上方）</text>
+                    <line x1="510" y1="131" x2="510" y2="171" stroke="#d06d4d" stroke-width="2" stroke-dasharray="4 4"/>
+                    <circle cx="370" cy="267" r="9" fill="#7461ba"/>
+                    <text x="360" y="290" text-anchor="end" font-size="14" fill="#5f4f9a">被高估（点在线下方）</text>
+                    <line x1="370" y1="267" x2="370" y2="227" stroke="#7461ba" stroke-width="2" stroke-dasharray="4 4"/>
+                    <text x="660" y="330" font-size="14" fill="#53676d">均衡时所有资产都应落在 SML 上</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 9-1</strong>　证券市场线（SML）。横轴为 β，纵轴为预期收益；直线斜率即市场风险溢价 E(R_m) − R_f。位于线上方的资产预期收益高于理论值（被低估），下方则被高估。图中数值为本课程<strong>教学示意</strong>（R_f=1.8%、E(R_m)=8%），非真实市场数据。理论出处：Sharpe, <em>Capital Asset Prices</em>, 1964。</figcaption>
+        </figure>
 
         <p>SML的斜率就是<strong>市场风险溢价（Market Risk Premium）</strong>，即E(R_m) - R_f。这个参数的大小在全球范围内存在明显差异：</p>
 
@@ -223,7 +279,8 @@ E(R_i) = R_f + β_i × (E(R_m) - R_f) + λ × FA_i
             <a href="index.html">📖 返回目录</a>
             <a href="10.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
