@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第7章 风险与收益</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +43,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第7章 风险与收益</h2>
+        <h1>第7章 风险与收益</h1>
 
         <p>大家好！恭喜你走到了第7章——我们终于来到了投资学最核心、最基础、最重要的概念：<strong>风险与收益</strong>。</p>
 
@@ -109,12 +112,52 @@ HPR = (120 - 100 + 2) / 100 = 22%</code></pre>
             <strong>波动率拖累的实战意义：</strong>如果你第一年赚50%、第二年亏30%，你的年化收益率只有2.5%——而不是10%的算术平均！这也是为什么"控制回撤"比"追求高收益"更重要的原因。一只每年稳定赚15%的基金，长期下来远胜于"一年翻倍、一年腰斩"的基金。
         </div>
 
+        <figure>
+            <svg role="img" aria-labelledby="drag-title drag-desc" viewBox="0 0 840 380" xmlns="http://www.w3.org/2000/svg">
+                <title id="drag-title">波动率拖累：相同算术平均下的终值差异</title>
+                <desc id="drag-desc">四根柱依次代表波动率 0%、10%、20%、30% 的资产，算术平均收益均为 15%，波动率越高，30 年终值倍数越低。</desc>
+                <rect width="840" height="380" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <text x="60" y="36" font-size="16" font-weight="700">相同算术平均收益（15%）、不同波动率的 30 年终值倍数</text>
+                    <line x1="70" y1="320" x2="800" y2="320" stroke="#94a3b8" stroke-width="2"/>
+                    <rect x="120" y="70" width="90" height="250" rx="8" fill="#147f80"/>
+                    <text x="165" y="60" text-anchor="middle" font-size="15" font-weight="700" fill="#0f766e">×66.2</text>
+                    <rect x="270" y="99" width="90" height="221" rx="8" fill="#2563b8"/>
+                    <text x="315" y="89" text-anchor="middle" font-size="15" font-weight="700" fill="#2563b8">×58.1</text>
+                    <rect x="420" y="168" width="90" height="152" rx="8" fill="#d06d4d"/>
+                    <text x="465" y="158" text-anchor="middle" font-size="15" font-weight="700" fill="#b85a3c">×39.1</text>
+                    <rect x="570" y="238" width="90" height="82" rx="8" fill="#c0504d"/>
+                    <text x="615" y="228" text-anchor="middle" font-size="15" font-weight="700" fill="#8a3f3d">×20.0</text>
+                    <text x="165" y="344" text-anchor="middle" font-size="14" fill="#53676d">σ=0%</text>
+                    <text x="315" y="344" text-anchor="middle" font-size="14" fill="#53676d">σ=10%</text>
+                    <text x="465" y="344" text-anchor="middle" font-size="14" fill="#53676d">σ=20%</text>
+                    <text x="615" y="344" text-anchor="middle" font-size="14" fill="#53676d">σ=30%</text>
+                    <text x="70" y="366" font-size="13" fill="#53676d">几何平均 ≈ 算术平均 − σ²/2：波动越大，真实年化越低。</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 7-1</strong>　波动率拖累。四类资产的算术平均收益同为 15%，但波动率越高，几何平均（真实年化）越低，30 年终值倍数相差数倍。数值按几何平均 ≈ 算术平均 − σ²/2 估算，为本课程<strong>教学示意</strong>，非真实基金业绩。</figcaption>
+        </figure>
+
         <h2>7.2 风险度量</h2>
 
         <p>在投资学中，"风险"不是"损失的可能性"这么模糊的概念，而是有精确定义的数学量。</p>
 
         <h3>方差与标准差</h3>
         <p>最经典的风险度量：<strong>波动率</strong>。你计算出资产收益率的"离散程度"——波动越大，风险越大。</p>
+
+        <div class="math-equation" role="group" aria-label="样本方差与标准差">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="样本方差与标准差公式，可以横向滚动">
+                <math display="block" aria-label="样本方差等于每个收益率与均值之差的平方求和，再除以样本数减一">
+                    <mrow>
+                        <msup><mi>σ</mi><mn>2</mn></msup><mo>=</mo>
+                        <mfrac><mn>1</mn><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></mfrac>
+                        <munderover><mo>Σ</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover>
+                        <msup><mrow><mo>(</mo><msub><mi>R</mi><mi>i</mi></msub><mo>−</mo><mover><mi>R</mi><mo>¯</mo></mover><mo>)</mo></mrow><mn>2</mn></msup>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="R i 为第 i 期收益率"><msub><mi>R</mi><mi>i</mi></msub></math> 为第 i 期收益率，<math class="math-inline" aria-label="R 上划线为收益率均值"><mover><mi>R</mi><mo>¯</mo></mover></math> 为均值，<math class="math-inline" aria-label="n 为观测期数"><mi>n</mi></math> 为期数；标准差 σ 为方差的平方根。</p>
+            </div>
+        </div>
 
         <table>
             <thead>
@@ -179,6 +222,15 @@ HPR = (120 - 100 + 2) / 100 = 22%</code></pre>
         <p>你今年赚了10%，看起来很美好。但物价也涨了3%——你的实际购买力只增加了7%。这个道理很简单：<strong>名义收益（Nominal Return）vs 实际收益（Real Return）</strong>。</p>
 
         <p>核心公式来自经济学家Irving Fisher（欧文·费雪）：</p>
+
+        <div class="math-equation" role="group" aria-label="Fisher 效应">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="Fisher 效应公式，可以横向滚动">
+                <math display="block" aria-label="1 加名义利率等于 1 加实际利率乘以 1 加通胀率">
+                    <mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>i</mi><mo>)</mo><mo>=</mo><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo><mo>(</mo><mn>1</mn><mo>+</mo><mi>π</mi><mo>)</mo></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="i 为名义利率"><mi>i</mi></math> 为名义利率，<math class="math-inline" aria-label="r 为实际利率"><mi>r</mi></math> 为实际利率，<math class="math-inline" aria-label="π 为通胀率"><mi>π</mi></math> 为通胀率。</p>
+            </div>
+        </div>
 
         <pre><code># Fisher效应：名义利率 = 实际利率 + 预期通胀率
 # 更精确的公式： (1 + 名义利率) = (1 + 实际利率) × (1 + 通胀率)
@@ -247,7 +299,8 @@ HPR = (120 - 100 + 2) / 100 = 22%</code></pre>
             <a href="index.html">📖 返回目录</a>
             <a href="08.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
