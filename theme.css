@@ -174,8 +174,9 @@ th {
 }
 .skip-link:focus { left: 0; }
 
-.main-content { max-width: 1400px; }
+.main-content { max-width: 1400px; min-width: 0; }
 .main-content article { max-width: 860px; }
+.sidebar { min-width: 0; }
 .main-content h1 {
     font-size: clamp(1.5rem, 1.1rem + 2vw, 2.1rem);
     color: #0f172a; border-left: 8px solid var(--accent);

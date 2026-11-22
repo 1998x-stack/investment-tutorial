@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第8章 资产组合理论</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +43,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第8章 资产组合理论</h2>
+        <h1>第8章 资产组合理论</h1>
 
         <p>2008年的一个深秋夜晚，哈佛大学捐赠基金的CIO（首席投资官）坐在办公室里，盯着屏幕上的一片血红。这支管理着超过360亿美元的基金，当年亏损了27%。不仅仅是哈佛——耶鲁亏了25%，斯坦福亏了30%。这些世界最顶尖的投资机构，拥有最聪明的人才和最先进的模型，为什么在同一时间遭受了如此惨重的损失？</p>
 
@@ -72,6 +75,30 @@
 
         <p>先看最简单的情况：只考虑两种资产。假设你投资了股票A和债券B，权重分别为 w_A 和 w_B（w_A + w_B = 1），那么组合的预期收益和方差分别为：</p>
 
+        <div class="math-equation" role="group" aria-label="两资产组合的预期收益与方差">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="两资产组合的预期收益与方差公式，可以横向滚动">
+                <math display="block" aria-label="组合预期收益等于权重A乘资产A预期收益，加权重B乘资产B预期收益">
+                    <mrow>
+                        <mi>E</mi><mo>(</mo><msub><mi>R</mi><mi>p</mi></msub><mo>)</mo><mo>=</mo>
+                        <msub><mi>w</mi><mi>A</mi></msub><mi>E</mi><mo>(</mo><msub><mi>R</mi><mi>A</mi></msub><mo>)</mo>
+                        <mo>+</mo>
+                        <msub><mi>w</mi><mi>B</mi></msub><mi>E</mi><mo>(</mo><msub><mi>R</mi><mi>B</mi></msub><mo>)</mo>
+                    </mrow>
+                </math>
+                <math display="block" aria-label="组合方差等于权重A平方乘资产A方差，加权重B平方乘资产B方差，再加两倍权重乘积乘相关系数乘两资产标准差之积">
+                    <mrow>
+                        <msubsup><mi>σ</mi><mi>p</mi><mn>2</mn></msubsup><mo>=</mo>
+                        <msubsup><mi>w</mi><mi>A</mi><mn>2</mn></msubsup><msubsup><mi>σ</mi><mi>A</mi><mn>2</mn></msubsup>
+                        <mo>+</mo>
+                        <msubsup><mi>w</mi><mi>B</mi><mn>2</mn></msubsup><msubsup><mi>σ</mi><mi>B</mi><mn>2</mn></msubsup>
+                        <mo>+</mo>
+                        <mn>2</mn><msub><mi>w</mi><mi>A</mi></msub><msub><mi>w</mi><mi>B</mi></msub><msub><mi>ρ</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub><msub><mi>σ</mi><mi>A</mi></msub><msub><mi>σ</mi><mi>B</mi></msub>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="权重A加权重B等于1"><mrow><msub><mi>w</mi><mi>A</mi></msub><mo>+</mo><msub><mi>w</mi><mi>B</mi></msub><mo>=</mo><mn>1</mn></mrow></math>。</p>
+            </div>
+        </div>
+
         <pre><code># 两资产组合的数学公式
 # 预期收益：加权平均
 E(R_p) = w_A * E(R_A) + w_B * E(R_B)
@@ -88,11 +115,48 @@ E(R_p) = w_A * E(R_A) + w_B * E(R_B)
             <strong>关键洞察：</strong>当ρ = -1时（完全负相关），理论上你可以构建一个零风险组合！但在现实中，几乎找不到完全负相关的资产。不过这个思想告诉我们——找到<strong>低相关甚至负相关的资产</strong>，是构建高效组合的核心策略。
         </div>
 
+        <div id="two-asset-widget" style="margin:20px 0;padding:16px 18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;">
+            <p style="margin:0 0 8px;"><strong>动手算一算：两资产组合</strong>（固定 σ_A=20%、σ_B=10%、ρ=0.3、E(R_A)=10%、E(R_B)=4%，均为教学示意）</p>
+            <label for="wa" style="display:block;margin:10px 0 4px;">股票权重 w_A：<output id="waOut">30%</output></label>
+            <input type="range" id="wa" min="0" max="100" step="5" value="30" style="width:100%;max-width:420px;display:block;">
+            <p style="margin:12px 0 6px;">组合预期收益 E(R_p)：<strong id="erOut">—</strong>　标准差 σ_p：<strong id="sdOut">—</strong></p>
+            <button type="button" id="calcBtn" style="padding:6px 16px;border:1px solid #cbd5e1;border-radius:30px;background:#eef4ff;color:#1e3a5f;font-weight:600;cursor:pointer;">股票权重 +10%，重新计算</button>
+        </div>
+
         <h2>8.2 可行集与有效前沿</h2>
 
         <p>当你把两种资产以不同比例组合时，所有可能的（风险，收益）点就构成了<strong>可行集（Feasible Set）</strong>。可行集的左边界就是大名鼎鼎的<strong>有效前沿（Efficient Frontier）</strong>。</p>
 
         <p>有效前沿上的每个点代表一个"帕累托最优"的组合——在给定风险下收益最高，或在给定收益下风险最低。位于有效前沿之下的组合都是"次优"的。</p>
+
+        <figure>
+            <svg role="img" aria-labelledby="eff-title eff-desc" viewBox="0 0 840 460" xmlns="http://www.w3.org/2000/svg">
+                <title id="eff-title">两资产有效前沿与资本配置线</title>
+                <desc id="eff-desc">横轴为组合标准差，纵轴为预期收益。股票 A 与债券 B 连成的双曲线左缘为有效前沿，最左点为全局最小方差组合 GMVP；从无风险利率 Rf 出发与有效前沿相切的直线为资本配置线。</desc>
+                <rect width="840" height="460" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <line x1="90" y1="390" x2="810" y2="390" stroke="#94a3b8" stroke-width="2"/>
+                    <line x1="90" y1="390" x2="90" y2="30" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="804" y="418" text-anchor="end" font-size="14" fill="#53676d">风险 σ（标准差）→</text>
+                    <text x="96" y="28" font-size="14" fill="#53676d">↑ 预期收益 E(R)</text>
+                    <line x1="90" y1="332" x2="700" y2="62" stroke="#2563b8" stroke-width="2.5" stroke-dasharray="8 6"/>
+                    <text x="300" y="150" font-size="14" fill="#2563b8">资本配置线 CAL（切线，斜率 = 夏普比率）</text>
+                    <path d="M 374 273 Q 452 168 658 98" fill="none" stroke="#147f80" stroke-width="4"/>
+                    <text x="500" y="212" font-size="15" font-weight="700" fill="#147f80">有效前沿</text>
+                    <circle cx="658" cy="98" r="8" fill="#d06d4d"/>
+                    <text x="650" y="82" text-anchor="end" font-size="14" fill="#8a5a3f">股票 A　σ=20%　E=10%</text>
+                    <circle cx="374" cy="273" r="8" fill="#7461ba"/>
+                    <text x="386" y="296" font-size="14" fill="#5f4f9a">债券 B　σ=10%　E=4%</text>
+                    <circle cx="368" cy="256" r="9" fill="#ffffff" stroke="#0f766e" stroke-width="4"/>
+                    <text x="360" y="240" text-anchor="end" font-size="14" font-weight="700" fill="#0f766e">GMVP　σ≈9.8%</text>
+                    <circle cx="90" cy="332" r="7" fill="#1e293b"/>
+                    <text x="100" y="354" font-size="14" fill="#53676d">R_f = 2%（无风险利率示意）</text>
+                    <text x="650" y="330" font-size="14" fill="#53676d">股票 B 与股票 A 的不同权重，</text>
+                    <text x="650" y="352" font-size="14" fill="#53676d">对应前沿上不同的点。</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 8-1</strong>　两资产（股票 A、债券 B）的有效前沿与资本配置线。曲线左侧为有效前沿，最左点为全局最小方差组合 GMVP；从无风险利率 R_f 出发的切点即夏普比率最高的最优风险组合。图中坐标与数值为本课程<strong>教学示意</strong>（σ_A=20%、σ_B=10%、ρ=0.3、R_f=2%），非真实市场数据。理论出处：Markowitz, <em>Portfolio Selection</em>, 1952。</figcaption>
+        </figure>
 
         <h3>最小方差组合与全局最小方差</h3>
 
@@ -108,8 +172,8 @@ Cov = ρ * σ_A * σ_B
 w_A_min = (σ²_B - Cov) / (σ²_A + σ²_B - 2*Cov)
 w_B_min = 1 - w_A_min
 
-# 计算结果：w_A_min ≈ 0.18, w_B_min ≈ 0.82
-# 即：82%的债券 + 18%的股票组合风险最低</code></pre>
+# 计算结果：w_A_min ≈ 0.11, w_B_min ≈ 0.89
+# 即：89%的债券 + 11%的股票组合风险最低</code></pre>
 
         <p>这个数学结果告诉我们一个反直觉的结论：即使股票的预期收益远高于债券，追求最低风险的投资者也应该持有少量股票——因为股票和债券的低相关性可以提供分散化收益。</p>
 
@@ -120,12 +184,14 @@ w_B_min = 1 - w_A_min
             <tbody>
                 <tr><td>全股票</td><td>100%</td><td>0%</td><td>10%</td><td>20%</td></tr>
                 <tr><td>全债券</td><td>0%</td><td>100%</td><td>4%</td><td>10%</td></tr>
-                <tr><td>GMVP</td><td>18%</td><td>82%</td><td>5.1%</td><td>9.2%</td></tr>
-                <tr><td>均衡组合</td><td>60%</td><td>40%</td><td>7.6%</td><td>13.1%</td></tr>
+                <tr><td>GMVP</td><td>11%</td><td>89%</td><td>4.6%</td><td>9.8%</td></tr>
+                <tr><td>均衡组合</td><td>60%</td><td>40%</td><td>7.6%</td><td>13.7%</td></tr>
             </tbody>
         </table>
 
-        <p>注意GMVP的标准差（9.2%）甚至低于全债券组合（10%）！这就是分散化的神奇之处——<strong>1+1 &lt; 2</strong>，组合的风险小于各部分风险之和。</p>
+        <p class="eq-label">表中数据由本节公式代入 σ_A=20%、σ_B=10%、ρ=0.3、E(R_A)=10%、E(R_B)=4% 算得，为本课程<strong>教学示意</strong>，非真实市场数据。</p>
+
+        <p>注意GMVP的标准差（9.8%）甚至低于全债券组合（10%）！这就是分散化的神奇之处——<strong>1+1 &lt; 2</strong>，组合的风险小于各部分风险之和。</p>
 
         <h2>8.3 无差异曲线与最优组合</h2>
 
@@ -269,8 +335,35 @@ print("最优权重:", result.x)
             <a href="index.html">📖 返回目录</a>
             <a href="09.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
+<script>
+(function () {
+    var wa = document.getElementById('wa');
+    if (!wa) return;
+    var btn = document.getElementById('calcBtn');
+    var waOut = document.getElementById('waOut');
+    var erOut = document.getElementById('erOut');
+    var sdOut = document.getElementById('sdOut');
+    var EA = 0.10, EB = 0.04, sA = 0.20, sB = 0.10, rho = 0.3;
+    function calc() {
+        var w = (+wa.value) / 100, wb = 1 - w;
+        var e = w * EA + wb * EB;
+        var v = w * w * sA * sA + wb * wb * sB * sB + 2 * w * wb * rho * sA * sB;
+        waOut.textContent = Math.round(w * 100) + '%';
+        erOut.textContent = (e * 100).toFixed(2) + '%';
+        sdOut.textContent = (Math.sqrt(v) * 100).toFixed(2) + '%';
+    }
+    wa.addEventListener('input', calc);
+    btn.addEventListener('click', function () {
+        wa.value = (+wa.value + 10) % 110;
+        calc();
+        btn.textContent = '继续 +10%（当前 ' + wa.value + '%）';
+    });
+    calc();
+})();
+</script>
 </body>
 </html>
