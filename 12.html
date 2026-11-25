@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第12章 行为金融学</h2>
+        <h1>第12章 行为金融学</h1>
 
         <p>先做一个小实验。请快速回答以下两个问题：</p>
 
@@ -78,11 +80,47 @@
 # 典型参数（来自实验估计）：
 # α ≈ 0.88（收益区域的边际递减敏感度）
 # β ≈ 0.88（损失区域的边际递减敏感度）
-# λ ≈ 2.25（损失厌恶系数——损失感受约为收益的2.25倍）
+# λ ≈ 2.25（损失厌恶系数）
+#   即损失感受约为等量收益的 2.25 倍
 
 # 例如：收益100元的心理价值 = 100^0.88 ≈ 55.8
-# 损失100元的心理价值 = -2.25 * 100^0.88 ≈ -125.5
-# 损失的心理冲击是收益的 125.5/55.8 ≈ 2.25 倍</code></pre>
+# 损失100元的心理价值 = -125.5
+# 冲击比 = 125.5 / 55.8 ≈ 2.25 倍</code></pre>
+
+        <div class="math-equation" role="group" aria-label="前景理论价值函数">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="前景理论价值函数，可横向滚动">
+                <math display="block" aria-label="收益区域价值等于 x 的 alpha 次幂">
+                    <mrow><mi>V</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>x</mi><mi>α</mi></msup><mo>,</mo><mspace width="0.5em"/><mi>x</mi><mo>≥</mo><mn>0</mn></mrow>
+                </math>
+                <math display="block" aria-label="损失区域价值等于负的 lambda 乘以负 x 的 beta 次幂">
+                    <mrow><mi>V</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mo>−</mo><mi>λ</mi><msup><mrow><mo>(</mo><mo>−</mo><mi>x</mi><mo>)</mo></mrow><mi>β</mi></msup><mo>,</mo><mspace width="0.5em"/><mi>x</mi><mo>&lt;</mo><mn>0</mn></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="x"><mi>x</mi></math> 为相对参考点的盈亏，<math class="math-inline" aria-label="alpha"><mi>α</mi></math>、<math class="math-inline" aria-label="beta"><mi>β</mi></math> 为敏感度指数，<math class="math-inline" aria-label="lambda"><mi>λ</mi></math> 为损失厌恶系数。实验估计通常取 <math class="math-inline" aria-label="alpha 约 0.88"><mi>α</mi><mo>≈</mo><mn>0.88</mn></math>、<math class="math-inline" aria-label="beta 约 0.88"><mi>β</mi><mo>≈</mo><mn>0.88</mn></math>、<math class="math-inline" aria-label="lambda 约 2.25"><mi>λ</mi><mo>≈</mo><mn>2.25</mn></math>，为本课程<strong>教学示意</strong>取值。理论出处：Kahneman &amp; Tversky, <em>Prospect Theory</em>, 1979。</p>
+            </div>
+        </div>
+
+        <figure>
+            <svg role="img" aria-labelledby="pt-title pt-desc" viewBox="0 0 840 320" xmlns="http://www.w3.org/2000/svg">
+                <title id="pt-title">前景理论价值函数</title>
+                <desc id="pt-desc">价值函数以参考点为原点：收益区域上凸（边际递减、风险厌恶），损失区域下凸（边际递减、风险追求）且更陡；x=+100 时 V 约 +58，x=−100 时 V 约 −129。</desc>
+                <rect width="840" height="320" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <line x1="70" y1="109" x2="800" y2="109" stroke="#cbd5e1" stroke-width="1.5"/>
+                    <line x1="420" y1="40" x2="420" y2="272" stroke="#94a3b8" stroke-width="1.5"/>
+                    <text x="30" y="160" font-size="13" fill="#53676d" transform="rotate(-90 30 160)" text-anchor="middle">心理价值 V(x)</text>
+                    <text x="180" y="130" font-size="14" font-weight="700" fill="#d06d4d" text-anchor="middle">损失（风险追求）</text>
+                    <text x="660" y="130" font-size="14" font-weight="700" fill="#2563b8" text-anchor="middle">收益（风险厌恶）</text>
+                    <text x="420" y="102" font-size="12" fill="#94a3b8" text-anchor="middle">参考点</text>
+                    <polyline fill="none" stroke="#7461ba" stroke-width="3" points="70,257.8 140,231.4 210,204 280,175.5 350,145.1 420,109 490,92.9 560,79.4 630,66.8 700,54.6 770,42.9"/>
+                    <circle cx="770" cy="42.9" r="5" fill="#2563b8"/>
+                    <text x="662" y="34" font-size="12" fill="#2563b8">x=+100 → V≈+58</text>
+                    <circle cx="70" cy="257.8" r="5" fill="#d06d4d"/>
+                    <text x="82" y="252" font-size="12" fill="#d06d4d">x=−100 → V≈−129</text>
+                    <text x="420" y="300" font-size="12" fill="#53676d" text-anchor="middle">参考点处的盈亏 x</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 12-1</strong>　前景理论价值函数（<em>α</em>=<em>β</em>=0.88、<em>λ</em>=2.25）。曲线在收益区<strong>上凸</strong>（越赚越麻木，故风险厌恶），在损失区<strong>下凸且更陡</strong>（越亏越难受，故宁可冒险翻本）。同样幅度的 ±100，损失端的心理冲击约为收益端的 2.25 倍——这就是损失厌恶的几何图像。曲线按公式以<strong>教学示意</strong>参数绘制。</figcaption>
+        </figure>
 
         <h3>确定效应（Certainty Effect）</h3>
         <p>高概率的结果被过高权重，低概率的结果被过高权重。这就是为什么人们既买彩票（低概率高收益被高估）又买保险（低概率高损失被高估）。在投资中，这导致了投资者对"高确定性的小收益"和"低确定性的大收益"产生非理性偏好。</p>
@@ -160,21 +198,23 @@
         <p>分析师也是人，同样受到羊群效应的影响。研究发现，分析师存在明显的"事后修正偏差"——当一个公司的盈利数据公布后，如果A分析师大幅下调了预测，B和C分析师也倾向于追随下调。"独立"的分析师报告，实际上远没有那么独立。</p>
 
         <pre><code># 分析师预测修正的羊群效应检测（简化）
-# 如果羊群效应显著，分析师修正的方向应该正相关
+# 若羊群效应显著，分析师修正方向应正相关
 
-# 假设有N个分析师，观察期间T
-# 对每个分析师i和时期t，定义修正方向：
-# Revision_i,t = 1（上调）, 0（不变）, -1（下调）
+# 假设有 N 个分析师、观察期 T
+# 定义修正方向 Revision_i,t：
+#   1（上调）, 0（不变）, -1（下调）
 
-# 计算分析师之间的修正相关性：
-# Herding_Score = Average(Corr(Revision_i, Revision_j)) for i ≠ j
+# 计算分析师之间修正的相关性：
+# Herding = Avg(Corr(Rev_i, Rev_j))
+#           对 i ≠ j 求平均
 
-# 如果Herding_Score > 0，说明分析师之间存在羊群效应
-# 实证发现：Herding_Score通常在0.15-0.35之间（显著为正）
+# Herding > 0 说明存在羊群效应
+# 实证通常落在 0.15-0.35（显著为正）
 
-# 实操建议：当所有分析师一致看好某只股票时，
-# 保持怀疑——这可能意味着好消息已经被充分定价；
-# 当共识分歧最大时，反而可能存在超额收益机会。</code></pre>
+# 实操建议：
+# 当分析师一致看好某只股票时，保持怀疑——
+# 好消息可能已被充分定价；
+# 当共识分歧最大时，反而可能有机会。</code></pre>
 
         <h2>12.5 沃顿2026新发现：相关性忽视</h2>
 
@@ -194,6 +234,8 @@
         <div class="tip">
             <strong>实践策略：</strong>基于相关性忽视的错误定价，可以设计以下投资策略——系统性地做多"相关性被低估的跨行业组合"、做空"相关性被高估的同行业组合"。但注意：这种策略需要精细的风险管理和足够的耐心，因为错误定价的纠正可能很慢。
         </div>
+
+        <p class="eq-label">说明：本章的偏差统计与参数（损失厌恶约 2.25、处置效应的相关倍数、沃顿“相关性忽视”研究的结论）为行为金融学文献与本课程<strong>教学示意</strong>的常见表述，用于说明方向与量级；精确数值与结论请以原始论文与交易所披露为准。</p>
 
         <h2>12.6 对投资实践的启示</h2>
 
@@ -248,7 +290,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="13.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
