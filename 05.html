@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第5章 衍生品基础</h2>
+        <h1>第5章 衍生品基础</h1>
 
         <p>大家好！欢迎来到投资学中最"刺激"的一章。前面几章我们讲的都是"原生资产"——股票、债券、基金。这些资产的价值来自实体经济。而这一章我们要讲的是<strong>衍生品（Derivatives）</strong>——它们的价值"衍生"自其他资产的价格变动。</p>
 
@@ -85,17 +87,56 @@
 # 标的：沪深300股指期货
 # 当前指数：4000点
 # 合约乘数：300元/点
-# 一份合约价值 = 4000 × 300 = 1,200,000 元
+# 一份合约价值 = 4000 × 300
+#              = 1,200,000 元
 # 保证金比例：12%
-# 需要缴纳的保证金 = 1,200,000 × 12% = 144,000 元
+# 需缴保证金 = 1,200,000 × 12%
+#            = 144,000 元
 
-# 如果指数上涨10%（从4000到4400点）
+# 如果指数上涨10%（4000 → 4400点）
 # 盈利 = (4400 - 4000) × 300 = 120,000 元
-# 相对于14.4万元保证金，收益率为 120,000/144,000 = 83.3%
-# 这就是杠杆的放大效应！
+# 保证金收益率 = 120,000 / 144,000
+#              = 83.3%  ← 杠杆放大效应
 
-# 但如果指数下跌10%（从4000到3600点）
+# 如果指数下跌10%（4000 → 3600点）
 # 亏损 = 120,000 元，保证金几乎损失殆尽</code></pre>
+
+        <figure>
+            <svg role="img" aria-labelledby="lev-title lev-desc" viewBox="0 0 840 300" xmlns="http://www.w3.org/2000/svg">
+                <title id="lev-title">保证金制度的杠杆放大效应</title>
+                <desc id="lev-desc">标的指数从 4000 点上下变动 10% 时，12% 保证金头寸的权益同向变动约 83%，放大倍数约 8.3 倍；上涨与下跌对称放大。</desc>
+                <rect width="840" height="300" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <line x1="480" y1="40" x2="480" y2="262" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 5"/>
+                    <text x="480" y="32" font-size="13" fill="#53676d" text-anchor="middle">0%</text>
+                    <text x="20" y="95" font-size="15" font-weight="700" fill="#1e293b">指数 +10%</text>
+                    <text x="20" y="115" font-size="12" fill="#53676d">4000 → 4400</text>
+                    <rect x="480" y="80" width="250" height="40" rx="6" fill="#2563b8"/>
+                    <text x="494" y="106" font-size="14" font-weight="700" fill="#ffffff">保证金权益 +83.3%</text>
+                    <text x="20" y="195" font-size="15" font-weight="700" fill="#1e293b">指数 −10%</text>
+                    <text x="20" y="215" font-size="12" fill="#53676d">4000 → 3600</text>
+                    <rect x="230" y="180" width="250" height="40" rx="6" fill="#d06d4d"/>
+                    <text x="244" y="206" font-size="14" font-weight="700" fill="#ffffff">保证金权益 −83.3%</text>
+                    <text x="480" y="288" font-size="12" fill="#53676d" text-anchor="middle">指数每变动 10%，12% 保证金头寸权益变动约 83%（杠杆约 8.3 倍）</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 5-1</strong>　保证金制度的杠杆放大效应。指数涨 10% 时，保证金权益涨约 83%；跌 10% 时，亏损同样被放大到约 83%——<strong>杠杆是对称的放大镜，不只放大盈利</strong>。若跌幅超过约 12%，权益即为负，触发追保或强制平仓。数值按合约乘数 300 元/点、保证金比例 12% 算得，为本课程<strong>教学示意</strong>。</figcaption>
+        </figure>
+
+        <div class="math-equation" role="group" aria-label="期货合约价值、杠杆与逐日盯市公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="期货合约价值、杠杆与逐日盯市公式，可横向滚动">
+                <math display="block" aria-label="期货合约价值等于标的指数乘以合约乘数">
+                    <mrow><msub><mi>V</mi><mtext>合约</mtext></msub><mo>=</mo><mi>S</mi><mo>×</mo><mi>m</mi></mrow>
+                </math>
+                <math display="block" aria-label="杠杆倍数等于合约价值除以保证金，也等于保证金比例的倒数">
+                    <mrow><mi>L</mi><mo>=</mo><mfrac><msub><mi>V</mi><mtext>合约</mtext></msub><mi>M</mi></mfrac><mo>=</mo><mfrac><mn>1</mn><mi>μ</mi></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="当日盯市盈亏等于当日结算价减前日结算价乘以合约乘数与手数">
+                    <mrow><mi>PL</mi><mo>=</mo><mo>(</mo><msub><mi>S</mi><mi>t</mi></msub><mo>−</mo><msub><mi>S</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>)</mo><mo>×</mo><mi>m</mi><mo>×</mo><mi>n</mi></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="S"><mi>S</mi></math> 为标的指数点数，<math class="math-inline" aria-label="m"><mi>m</mi></math> 为合约乘数（元/点），<math class="math-inline" aria-label="M"><mi>M</mi></math> 为保证金金额，<math class="math-inline" aria-label="mu"><mi>μ</mi></math> 为保证金比例，<math class="math-inline" aria-label="n"><mi>n</mi></math> 为持仓手数。当 <math class="math-inline" aria-label="mu 为 12%"><mi>μ</mi><mo>=</mo><mn>0.12</mn></math> 时杠杆 <math class="math-inline" aria-label="L 约 8.3 倍"><mi>L</mi><mo>≈</mo><mn>8.3</mn></math> 倍。</p>
+            </div>
+        </div>
 
         <h2>5.2 期权基础</h2>
 
@@ -135,6 +176,8 @@
         <div class="highlight">
             <strong>一个惊人的数字：</strong>截至2025年底，全球场外衍生品市场的名义本金余额超过600万亿美元——是全球GDP的6倍以上。这个规模如此巨大，以至于衍生品市场的风险一旦爆发（如2008年的CDS连环违约），会通过交易对手风险（Counterparty Risk）传染到整个金融体系。
         </div>
+
+        <p class="eq-label">说明：本章的杠杆算例（4000 点、合约乘数 300 元/点、保证金比例 12%）与市场规模数字为<strong>教学示意</strong>，用于展示杠杆与盯市的量级和方向，并非特定交易日的真实报价；交易规则请以沪深交易所、中金所及监管机构最新披露为准。</p>
 
         <h2>5.4 衍生品的三大用途</h2>
 
@@ -179,7 +222,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="06.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
