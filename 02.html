@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第2章 股票</h2>
+        <h1>第2章 股票</h1>
 
         <p>大家好，欢迎来到第2章！如果你问一个普通人"投资是什么"，十有八九他会回答"买股票"。股票确实是普通人最熟悉的投资品种——但你有没有想过，当你说"买股票"的时候，你实际上在买什么？</p>
 
@@ -59,6 +61,8 @@
         <div class="highlight">
             <strong>核心启示：</strong>股票投资的本质是分享优秀公司的成长。如果你看好腾讯的未来，持有它的股票比开一家奶茶店更可能帮你实现财富增长——因为腾讯的利润增长不受你每天营业时间的限制。
         </div>
+
+        <p class="eq-label">说明：本章用于引出概念的个案与价格数字（如个股历史股价、股息率）为公开报道的近似取值，仅作教学示意，未逐笔核验；估值公式中的参数均为假设值，请以交易所与上市公司正式披露为准。</p>
 
         <h2>2.1 普通股与优先股</h2>
 
@@ -151,6 +155,53 @@ V = 2.00 * 1.05 / (0.08 - 0.05)  # = 70.00 元
 # 不同增长率假设下的理论估值差异巨大！
 # 为什么"估值是一门艺术"——因为增长率 g 只差1%，估值结果可能差30%。</code></pre>
 
+        <div class="math-equation" role="group" aria-label="股利贴现与戈登增长模型">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="股利贴现与戈登增长模型，可横向滚动">
+                <math display="block" aria-label="股票价值等于各期股息的现值之和">
+                    <mrow>
+                        <msub><mi>V</mi><mn>0</mn></msub><mo>=</mo>
+                        <munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mi>∞</mi></munderover>
+                        <mfrac><msub><mi>D</mi><mi>t</mi></msub><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mi>t</mi></msup></mfrac>
+                    </mrow>
+                </math>
+                <math display="block" aria-label="戈登增长模型：价值等于下期股息除以必要收益率减增长率">
+                    <mrow>
+                        <msub><mi>V</mi><mn>0</mn></msub><mo>=</mo>
+                        <mfrac><msub><mi>D</mi><mn>1</mn></msub><mrow><mi>r</mi><mo>−</mo><mi>g</mi></mrow></mfrac>
+                        <mo>,</mo><mspace width="0.5em"/><mi>g</mi><mo>&lt;</mo><mi>r</mi>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="D_t"><msub><mi>D</mi><mi>t</mi></msub></math> 为第 <math class="math-inline" aria-label="t"><mi>t</mi></math> 期每股股息，<math class="math-inline" aria-label="r"><mi>r</mi></math> 为必要收益率，<math class="math-inline" aria-label="g"><mi>g</mi></math> 为固定股息增长率。零增长模型是 <math class="math-inline" aria-label="g 等于 0"><mi>g</mi><mo>=</mo><mn>0</mn></math> 的特例；当 <math class="math-inline" aria-label="g 趋近 r"><mi>g</mi><mo>→</mo><mi>r</mi></math> 时分母趋于零，估值发散。</p>
+            </div>
+        </div>
+
+        <figure>
+            <svg role="img" aria-labelledby="ddm-title ddm-desc" viewBox="0 0 840 320" xmlns="http://www.w3.org/2000/svg">
+                <title id="ddm-title">戈登增长模型对增长率的敏感性</title>
+                <desc id="ddm-desc">在 D1=2.1 元、r=8% 固定不变时，估值随增长率 g 上升而加速膨胀：g 从 0% 升到 5%，估值从约 26 元升到 70 元；g 升到 7% 时估值约 210 元。</desc>
+                <rect width="840" height="320" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <line x1="70" y1="30" x2="70" y2="260" stroke="#94a3b8" stroke-width="1.5"/>
+                    <line x1="70" y1="260" x2="800" y2="260" stroke="#94a3b8" stroke-width="1.5"/>
+                    <text x="30" y="150" font-size="13" fill="#53676d" transform="rotate(-90 30 150)" text-anchor="middle">内在价值 V（元）</text>
+                    <text x="435" y="300" font-size="13" fill="#53676d" text-anchor="middle">固定股息增长率 g</text>
+                    <polyline fill="none" stroke="#2563b8" stroke-width="3" points="70,231.3 171.4,227.2 272.9,221.7 374.3,214 475.7,202.5 577.1,183.4 678.6,145 780,30"/>
+                    <circle cx="577.1" cy="183.4" r="5" fill="#d06d4d"/>
+                    <text x="585" y="176" font-size="13" font-weight="700" fill="#b0502f">g=5% → V=70</text>
+                    <circle cx="780" cy="30" r="5" fill="#d06d4d"/>
+                    <text x="700" y="24" font-size="13" font-weight="700" fill="#b0502f">g=7% → V=210</text>
+                    <text x="70" y="282" font-size="12" fill="#53676d" text-anchor="middle">0%</text>
+                    <text x="272.9" y="282" font-size="12" fill="#53676d" text-anchor="middle">2%</text>
+                    <text x="475.7" y="282" font-size="12" fill="#53676d" text-anchor="middle">4%</text>
+                    <text x="678.6" y="282" font-size="12" fill="#53676d" text-anchor="middle">6%</text>
+                    <text x="62" y="234" font-size="12" fill="#53676d" text-anchor="end">25</text>
+                    <text x="62" y="186" font-size="12" fill="#53676d" text-anchor="end">70</text>
+                    <text x="62" y="34" font-size="12" fill="#53676d" text-anchor="end">210</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 2-1</strong>　戈登增长模型对增长率 <em>g</em> 的敏感性（<em>D</em><sub>1</sub>=2.1 元、<em>r</em>=8% 固定）。增长率每提高一点，分母 (r−g) 就缩小一点，估值不是线性上升而是<strong>加速膨胀</strong>：g 从 0% 到 5% 估值涨约 2.7 倍，再涨到 7% 又翻约 3 倍。这正是"估值是一门艺术"的数学根源——结果对增长率假设极度敏感。曲线数值为本课程<strong>教学示意</strong>。</figcaption>
+        </figure>
+
         <h3>相对估值法</h3>
         <p>现实中，投资者更常用相对估值指标来快速判断贵贱：</p>
 
@@ -203,7 +254,8 @@ V = 2.00 * 1.05 / (0.08 - 0.05)  # = 70.00 元
             <a href="index.html">📖 返回目录</a>
             <a href="03.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
