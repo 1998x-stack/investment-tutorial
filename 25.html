@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第25章 交易策略设计</h2>
+        <h1>第25章 交易策略设计</h1>
 
         <p>2019年，我认识的一位量化私募基金经理做了一件"蠢事"：他花了大半年时间，开发了一个非常复杂的多因子模型，用上了LSTM神经网络、高频数据、舆情分析，回测曲线漂亮得令人窒息——年化收益40%、最大回撤只有8%、夏普比率2.8。他信心满满地实盘上线，结果三个月后，策略亏损了15%。更讽刺的是，同期他团队里一个交易员用最简单的"20日均线上穿60日均线"策略，赚了12%。</p>
 
@@ -63,58 +65,35 @@
             <li><strong>海龟交易法则：</strong>著名的经典趋势跟踪系统，使用唐奇安通道（Donchian Channel）突破作为入场信号。核心是"突破N日高点买入，跌破N日低点卖出"，配合加仓规则和止损规则。</li>
         </ul>
 
-        <pre><code># 海龟交易法则简化版（唐奇安通道突破）
+        <pre style="overflow-x:auto"><code># 海龟交易法则简化版（唐奇安通道突破）
 import pandas as pd
 import numpy as np
 
-def turtle_trading_strategy(df, entry_period=20, exit_period=10, atr_period=20):
-    """
-    海龟交易法则简化实现
-    entry: 价格突破过去N日最高点买入
-    exit: 价格跌破过去M日最低点卖出
-    stop: 2倍ATR止损
-    """
-    data = df.copy()
-
-    # 唐奇安通道
-    data['entry_high'] = data['收盘'].rolling(entry_period).max()
-    data['exit_low'] = data['收盘'].rolling(exit_period).min()
-
-    # ATR（平均真实波幅）
-    data['prev_close'] = data['收盘'].shift(1)
-    data['tr'] = np.maximum(
-        data['最高'] - data['最低'],
-        np.maximum(
-            abs(data['最高'] - data['prev_close']),
-            abs(data['最低'] - data['prev_close'])
-        )
-    )
-    data['atr'] = data['tr'].rolling(atr_period).mean()
-
-    # 信号生成
-    data['signal'] = 0
-    buy_condition = data['收盘'] > data['entry_high'].shift(1)
-    data.loc[buy_condition, 'signal'] = 1
-
-    # 无持仓时突破买入，有持仓时跌破止损或通道低点卖出
-    position = 0
-    entry_price = 0
-    data['position'] = 0
-
-    for i in range(entry_period, len(data)):
-        if position == 0 and data['signal'].iloc[i] == 1:
-            position = 1
-            entry_price = data['收盘'].iloc[i]
-            data.loc[data.index[i], 'position'] = 1
-        elif position == 1:
-            stop_price = entry_price - 2 * data['atr'].iloc[i]
-            if data['收盘'].iloc[i] < data['exit_low'].iloc[i] or data['收盘'].iloc[i] < stop_price:
-                position = 0
-                data.loc[data.index[i], 'position'] = 0
-            else:
-                data.loc[data.index[i], 'position'] = 1
-
-    return data</code></pre>
+def turtle(df, entry=20, exit=10):
+    d = df.copy()
+    # 唐奇安通道：N 日最高/最低
+    d['hi'] = d['收盘'].rolling(entry).max()
+    d['lo'] = d['收盘'].rolling(exit).min()
+    # 真实波幅 TR 与平均真实波幅 ATR
+    pc = d['收盘'].shift(1)
+    tr = np.maximum(
+        d['最高'] - d['最低'],
+        abs(d['最高'] - pc))
+    tr = np.maximum(tr, abs(d['最低'] - pc))
+    d['atr'] = tr.rolling(20).mean()
+    # 突破入场、跌破或 2 倍 ATR 止损出场
+    pos, entry_px, out = 0, 0.0, [0]
+    for i in range(entry, len(d)):
+        px = d['收盘'].iloc[i]
+        if pos == 0 and px > d['hi'].iloc[i-1]:
+            pos, entry_px = 1, px
+        elif pos == 1:
+            stop = entry_px - 2 * d['atr'].iloc[i]
+            if px < d['lo'].iloc[i] or px < stop:
+                pos = 0
+        out.append(pos)
+    d['position'] = out
+    return d</code></pre>
 
         <div class="tip">
             <strong>趋势跟踪的"命门"：</strong>趋势策略最怕的是"震荡市"（Range-bound Market）。在横盘整理行情中，频繁的金叉死叉信号会导致"两边打脸"——每次买入就跌、卖出就涨。2023年A股的很多时间里就处于这种状态。识别市场环境比优化策略参数更重要：当波动率偏低、均线缠绕时，降低趋势策略的仓位甚至空仓，就是最好的策略。
@@ -152,41 +131,20 @@ def turtle_trading_strategy(df, entry_period=20, exit_period=10, atr_period=20):
         <h3>因子的复合与择时</h3>
         <p>单一因子往往有"失效期"。比如2020-2021年，价值因子持续跑输成长因子，如果只押注价值因子会非常痛苦。因此实际中通常采用"多因子复合"的方式，把几个低相关的因子结合起来，平滑收益曲线。一个经典的复合方式是：同时使用价值+质量+低波三个因子，等权打分，选出综合排名前20%的股票构建组合。</p>
 
-        <pre><code># 多因子选股：简单打分法
-def multi_factor_scoring(df, factors):
-    """
-    多因子打分选股
-    df: 包含各因子值的DataFrame（每行一只股票）
-    factors: 因子列名列表
-    返回：每个股票的综合得分
-    """
-    scores = pd.DataFrame(index=df.index)
-    scores['股票'] = df['股票']
+        <pre style="overflow-x:auto"><code># 多因子选股：简单打分法
+def score(df, factors):
+    """等权因子打分选股"""
+    s = pd.DataFrame(index=df.index)
+    for f in factors:
+        r = df[f].rank()
+        n = (r - r.min()) / (r.max() - r.min())
+        s[f] = n
+    s['总分'] = s[factors].mean(axis=1)
+    return s.sort_values('总分', False)
 
-    for factor in factors:
-        # 标准化处理：将因子值转为0-1之间的分位数
-        rank = df[factor].rank(method='average')
-        normalized = (rank - rank.min()) / (rank.max() - rank.min())
-        scores[factor] = normalized
-
-    # 等权打分
-    factor_cols = [f for f in factors]
-    scores['总分'] = scores[factor_cols].mean(axis=1)
-
-    # 排序
-    scores = scores.sort_values('总分', ascending=False)
-
-    return scores
-
-# 示例
-# data = pd.DataFrame({
-#     '股票': ['A', 'B', 'C', 'D', 'E'],
-#     'ROE': [0.15, 0.20, 0.08, 0.12, 0.18],     # 质量因子
-#     'PB': [1.5, 0.8, 2.0, 1.2, 1.0],            # 价值因子（越低越好）
-#     '波动率': [0.35, 0.28, 0.45, 0.30, 0.25]     # 低波因子（越低越好）
-# })
-# 注意：PB和波动率是反向指标，需要取负向排名后再打分
-# result = multi_factor_scoring(data, ['ROE', 'PB', '波动率'])</code></pre>
+# 示例：质量 ROE、价值 PB、低波
+# 注意 PB 与波动率为反向指标，
+# 需取负向排名后再打分</code></pre>
 
         <h2>25.3 事件驱动：抓住"催化剂"</h2>
 
@@ -219,38 +177,60 @@ def multi_factor_scoring(df, factors):
             </tbody>
         </table>
 
+        <div class="math-equation" role="group" aria-label="策略评估指标公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="策略评估指标公式，可横向滚动">
+                <math display="block" aria-label="夏普比率等于策略收益减无风险利率除以总波动率">
+                    <mrow><mi>SR</mi><mo>=</mo><mfrac><mrow><msub><mi>R</mi><mi>p</mi></msub><mo>−</mo><msub><mi>R</mi><mi>f</mi></msub></mrow><msub><mi>σ</mi><mi>p</mi></msub></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="卡玛比率等于年化收益率除以最大回撤">
+                    <mrow><mi>Calmar</mi><mo>=</mo><mfrac><msub><mi>R</mi><mtext>annual</mtext></msub><mi>MDD</mi></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="第 t 日回撤等于当日净值减历史峰值再除以历史峰值">
+                    <mrow><msub><mi>DD</mi><mi>t</mi></msub><mo>=</mo><mfrac><mrow><msub><mi>P</mi><mi>t</mi></msub><mo>−</mo><msub><mi>Peak</mi><mi>t</mi></msub></mrow><msub><mi>Peak</mi><mi>t</mi></msub></mfrac></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="R p"><msub><mi>R</mi><mi>p</mi></msub></math> 为策略收益，<math class="math-inline" aria-label="sigma p"><msub><mi>σ</mi><mi>p</mi></msub></math> 为总波动率，<math class="math-inline" aria-label="MDD"><mi>MDD</mi></math> 为最大回撤（<math class="math-inline" aria-label="DD"><mi>DD</mi></math> 的最小值，为负值）。</p>
+            </div>
+        </div>
+
         <p>三个指标各有侧重。如果你的策略经常小亏但偶尔"踩雷"暴跌，索提诺比率会帮你发现问题——下行波动率大时索提诺比率会显著低于夏普。如果你关心"最坏情况下亏多少"，卡玛比率更直观——一般卡玛比率大于1算不错，大于2算优秀。</p>
 
         <h3>回撤分析：最真实的"压力测试"</h3>
         <p>回撤（Drawdown）是策略从峰值跌落到谷底的幅度。分析回撤不能只看"最大回撤"这一个数字，还要看：回撤持续了多久（回撤修复期）、回撤发生在什么市场环境下、策略在回撤期间的交易行为是否合理。如果一个策略最大回撤只有5%，但修复期需要3年，那它的实际风险可能比一个最大回撤15%但2个月就修复的策略更大。</p>
 
+        <figure>
+            <svg role="img" aria-labelledby="dd-title dd-desc" viewBox="0 0 840 300" xmlns="http://www.w3.org/2000/svg">
+                <title id="dd-title">回测曲线的最大回撤与修复期</title>
+                <desc id="dd-desc">演示净值曲线从 1.00 升到峰值 1.80，随后回撤到谷底 1.33（约 −26%），再恢复到 1.80，修复期约 14 个月。</desc>
+                <rect width="840" height="300" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <line x1="60" y1="250" x2="790" y2="250" stroke="#94a3b8" stroke-width="1.5"/>
+                    <text x="30" y="170" font-size="13" fill="#53676d" transform="rotate(-90 30 170)" text-anchor="middle">净值</text>
+                    <rect x="260" y="110" width="140" height="140" fill="#f5c9c2" opacity="0.55"/>
+                    <polyline fill="none" stroke="#2563b8" stroke-width="3" points="60,250 130,222 200,180 260,110 330,145 400,192 470,170 560,120 660,80 770,50"/>
+                    <line x1="260" y1="110" x2="400" y2="192" stroke="#b0502f" stroke-width="1.5" stroke-dasharray="5 5"/>
+                    <circle cx="260" cy="110" r="5" fill="#d06d4d"/>
+                    <text x="176" y="102" font-size="13" font-weight="700" fill="#b0502f">峰值 1.80</text>
+                    <circle cx="400" cy="192" r="5" fill="#d06d4d"/>
+                    <text x="408" y="214" font-size="13" font-weight="700" fill="#b0502f">谷底 1.33（−26%）</text>
+                    <text x="420" y="42" font-size="12" fill="#916c22" text-anchor="middle">净值回到峰值前，投资者一直在“水下”</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 25-1</strong>　最大回撤与修复期。同一个 −26% 的回撤，如果修复需要 14 个月，其实际风险远大于“回撤 15% 但两个月就修复”的策略。评价策略要同时看<strong>回撤深度</strong>与<strong>修复时长</strong>，而不是只看一条漂亮的累计收益曲线。曲线为教学示意。</figcaption>
+        </figure>
+
         <h3>滚动夏普：检验策略的稳定性</h3>
         <p>用全周期算一个夏普比率是"作弊"行为——它掩盖了策略在不同时期的巨大表现差异。正确的做法是计算"滚动夏普"（Rolling Sharpe），比如每12个月算一次夏普比率，观察其时间序列。如果滚动夏普忽高忽低、甚至长时间为负，说明策略的"Alpha"并不稳定。</p>
 
-        <pre><code># 滚动夏普比率计算
-def rolling_sharpe(returns, window=252, risk_free=0.0):
-    """
-    计算滚动夏普比率
-    returns: 日收益率序列
-    window: 滚动窗口（默认252个交易日）
-    risk_free: 无风险利率（默认0）
-    """
-    rolling_return = returns.rolling(window).mean() * 252 - risk_free
-    rolling_vol = returns.rolling(window).std() * np.sqrt(252)
-    rolling_sharpe = rolling_return / rolling_vol
+        <pre style="overflow-x:auto"><code># 滚动夏普比率计算
+def rolling_sharpe(ret, win=252, rf=0.0):
+    """滚动窗口夏普比率"""
+    ann_ret = ret.rolling(win).mean() * 252
+    sd = ret.rolling(win).std()
+    ann_vol = sd * np.sqrt(252)
+    sharpe = (ann_ret - rf) / ann_vol
+    return sharpe
 
-    # 统计结果
-    result = pd.DataFrame({
-        '滚动夏普': rolling_sharpe
-    })
-
-    return result
-
-# 示例：计算某策略的滚动夏普
-# result = rolling_sharpe(strategy_returns)
-# print(f"滚动夏普均值: {result['滚动夏普'].mean():.2f}")
-# print(f"滚动夏普标准差: {result['滚动夏普'].std():.2f}")
-# print(f"滚动夏普为正的比例: {(result['滚动夏普'] > 0).mean():.1%}")</code></pre>
+# 也可统计：为正的比例、均值、标准差</code></pre>
 
         <h2>25.5 策略容量与交易成本</h2>
 
@@ -279,6 +259,8 @@ def rolling_sharpe(returns, window=252, risk_free=0.0):
         <h3>ESG因子配置：从"道德选择"到"风险因子"</h3>
         <p>ESG投资最初被视为"道德偏好"，但越来越多的研究表明ESG评分高的公司在极端市场事件中的抗跌能力更强。2025年，ESG因子正被纳入主流的多因子模型中，成为继价值、动量、质量、低波之后的"第五因子"。</p>
 
+        <p class="eq-label">说明：本章的策略回测数字（年化收益、回撤、夏普等）与因子表现描述，均为本课程<strong>教学示意</strong>与常见经验区间，用于展示策略评估的方泂与陷阱，并非经审计的实盘业绩；具体策略请以可复现样本外回测为准。</p>
+
         <div class="highlight">
             <strong>本章要点回顾：</strong>
             <ul>
@@ -298,7 +280,8 @@ def rolling_sharpe(returns, window=252, risk_free=0.0):
             <a href="index.html">📖 返回目录</a>
             <a href="26.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
