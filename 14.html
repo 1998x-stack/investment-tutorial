@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第14章 权益估值</h2>
+        <h1>第14章 权益估值</h1>
 
         <p>2015年牛市顶峰时，一位刚入市的投资者问他的券商客户经理："贵州茅台现在200块一股，贵不贵？"客户经理想了想说："已经翻了一倍了，可能有点贵了——推荐你买这只10块钱的低价股，上升空间大。"后来的故事大家都知道：茅台在2021年最高涨到了2600元，而那只推荐的低价股后来跌到了2块钱以下。</p>
 
@@ -103,23 +105,62 @@
         <pre><code># FCFF估值两阶段模型
 
 # 第一步：计算FCFF
-# FCFF = EBIT × (1 - 税率) + 折旧摊销 - 资本支出 - 营运资本增加
+# FCFF = EBIT × (1 - 税率)
+#      + 折旧摊销 - 资本支出
+#      - 营运资本增加
 
-# 第二步：预测未来FCFF
-# 假设未来5年FCFF如下（单位：亿元）：
+# 第二步：预测未来FCFF（单位：亿元）
 # 年份    1    2    3    4    5
 # FCFF   10   12   14   16   19
 
 # 第三步：计算终值
-# 假设永续增长率g = 3%，WACC（加权平均资本成本）= 9%
-# 终值（Terminal Value）= FCFF_5 × (1 + g) / (WACC - g)
-#                        = 19 × 1.03 / (0.09 - 0.03) = 326.2亿元
+# 永续增长率 g = 3%
+# WACC（加权平均资本成本）= 9%
+# TV = FCFF_5 × (1 + g) / (WACC - g)
+#    = 19 × 1.03 / (0.09 - 0.03)
+#    = 326.2 亿元
 
 # 第四步：将FCFF和终值折现
-# 企业价值（EV）= Σ FCFF_t / (1+WACC)^t + TV / (1+WACC)^5
-# 股权价值 = 企业价值 - 净债务（总债务 - 现金及等价物）
-
+# EV = Σ FCFF_t/(1+WACC)^t
+#    + TV/(1+WACC)^5
+# 股权价值 = EV - 净债务
 # 每股价值 = 股权价值 / 总股数</code></pre>
+
+        <div class="math-equation" role="group" aria-label="自由现金流与贴现估值公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="自由现金流与贴现估值公式，可横向滚动">
+                <math display="block" aria-label="公司自由现金流等于息税前利润乘一减税率加折旧摊销减资本支出与营运资本增加">
+                    <mrow><mi>FCFF</mi><mo>=</mo><mi>EBIT</mi><mo>×</mo><mo>(</mo><mn>1</mn><mo>−</mo><mi>t</mi><mo>)</mo><mo>+</mo><mi>DA</mi><mo>−</mo><mi>CapEx</mi><mo>−</mo><mi>ΔNWC</mi></mrow>
+                </math>
+                <math display="block" aria-label="终值等于第五年自由现金流乘一加永续增长率除以资本成本减增长率">
+                    <mrow><mi>TV</mi><mo>=</mo><mfrac><mrow><msub><mi>FCFF</mi><mn>5</mn></msub><mo>×</mo><mo>(</mo><mn>1</mn><mo>+</mo><mi>g</mi><mo>)</mo></mrow><mrow><mi>WACC</mi><mo>−</mo><mi>g</mi></mrow></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="企业价值等于预测期现金流现值之和加终值现值">
+                    <mrow><mi>EV</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mn>5</mn></munderover><mfrac><msub><mi>FCFF</mi><mi>t</mi></msub><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>WACC</mi><mo>)</mo></mrow><mi>t</mi></msup></mfrac><mo>+</mo><mfrac><mi>TV</mi><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>WACC</mi><mo>)</mo></mrow><mn>5</mn></msup></mfrac></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="t"><mi>t</mi></math> 为所得税税率，<math class="math-inline" aria-label="DA"><mi>DA</mi></math> 为折旧摊销，<math class="math-inline" aria-label="g"><mi>g</mi></math> 为永续增长率。零增长、两阶段与三阶段模型都是上式在不同增长假设下的展开。</p>
+            </div>
+        </div>
+
+        <figure>
+            <svg role="img" aria-labelledby="dcf-title dcf-desc" viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
+                <title id="dcf-title">DCF 企业价值的构成</title>
+                <desc id="dcf-desc">在 FCFF=10,12,14,16,19、WACC=9%、g=3% 的两阶段模型中，预测期 5 年现金流现值约 54 亿，终值现值约 212 亿，企业价值约 266 亿，终值占约 80%。</desc>
+                <rect width="840" height="280" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <text x="420" y="42" font-size="15" font-weight="700" fill="#1e293b" text-anchor="middle">企业价值 EV ≈ 266 亿（两阶段 FCFF 模型示例）</text>
+                    <rect x="60" y="78" width="720" height="64" rx="10" fill="#e2e8f0"/>
+                    <rect x="60" y="78" width="146" height="64" rx="10" fill="#2563b8"/>
+                    <rect x="206" y="78" width="574" height="64" rx="10" fill="#7461ba"/>
+                    <text x="133" y="106" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">预测期现值</text>
+                    <text x="133" y="124" font-size="12" fill="#ffffff" text-anchor="middle">≈ 54 亿</text>
+                    <text x="493" y="114" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">终值现值 ≈ 212 亿（约 80%）</text>
+                    <text x="60" y="180" font-size="13" fill="#53676d">前 5 年 FCFF 现值：约 54 亿（20%）</text>
+                    <text x="60" y="204" font-size="13" fill="#53676d">第 5 年之后终值现值：约 212 亿（80%）</text>
+                    <text x="420" y="246" font-size="12" fill="#916c22" text-anchor="middle">终值占约 80%：DCF 的结论主要由第 5 年之后的假设决定</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 14-1</strong>　DCF 企业价值的构成。用本章算例（FCFF = 10/12/14/16/19 亿、WACC = 9%、永续增长 g = 3%），“预测期 + 终值”合计约 266 亿，其中<strong>终值占约 80%</strong>。这意味着 DCF 的结果主要由“第 5 年之后”的假设主导——g 或 WACC 微调就能大幅改变目标价。数值为本课程<strong>教学示意</strong>算例。</figcaption>
+        </figure>
 
         <h3>FCFE（股权自由现金流）估值</h3>
         <p>FCFE = FCFF - 利息支出 × (1 - 税率) + 净新增借款。FCFE直接度量了"属于股东的那部分自由现金流"，用权益资本成本（r）而不是WACC来折现。</p>
@@ -158,9 +199,12 @@
 # g = 增长率
 
 # 这个公式说明：
-# - 增长率越高 → PE越高（成长股高PE有其合理性）
-# - 资本成本越低 → PE越高（低利率环境下"高PE"更合理）
-# - 股利支付率越高 → PE越高（但支付率高也意味着投资机会少）
+# - 增长率越高 → PE 越高
+#   （成长股高 PE 有其合理性）
+# - 资本成本越低 → PE 越高
+#   （低利率环境下高 PE 更合理）
+# - 股利支付率越高 → PE 越高
+#   （支付率高也意味着投资机会少）
 
 # 当前A股主要指数的PE水平（2025年数据）：
 # 上证50: 约10.5倍
@@ -173,6 +217,8 @@
             <strong>估值不可比的真相：</strong>很多投资者喜欢说"A股比美股贵"——沪深300的PE约12.5倍 vs 标普500的约22倍，看起来A股还更"便宜"。但估值差异背后的原因很复杂：行业结构不同（A股金融和周期股占比高）、增长前景不同、无风险利率不同、资本成本和风险溢价不同。单纯比较PE数字，就像比较"北京房价vs纽约房价"——数字本身没有意义，需要理解背后各自的经济逻辑。
         </div>
 
+        <p class="eq-label">说明：本章指数 PE/PB 区间、行业估值倍数与贴现算例，均为本课程<strong>教学示意</strong>，用于展示相对水平与比较方法；具体数值随市场与盈利周期变动，请以交易所与主流数据终端的最新披露为准。</p>
+
         <h2>14.4 剩余收益模型</h2>
 
         <p>剩余收益模型（Residual Income Model, RIM）是近年来重新受到重视的估值方法。它的核心思想是：<strong>公司的价值 = 当前账面价值 + 未来超常收益的现值</strong>。</p>
@@ -184,7 +230,7 @@
 
 # 其中：
 # B₀ = 当前每股账面价值
-# RI_t = 第t期的剩余收益 = (ROE - r) × B_{t-1}
+# RI_t = (ROE - r) × B_{t-1}
 
 # 例：某公司B₀ = 20元，ROE = 15%，r = 10%
 # 未来5年剩余收益：
@@ -255,7 +301,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="15.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
