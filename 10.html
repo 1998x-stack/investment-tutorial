@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第10章 套利定价与多因子模型</h2>
+        <h1>第10章 套利定价与多因子模型</h1>
 
         <p>2019年，一家国内量化私募的基金经理在路演中自信满满地说："我们用的就是Barra多因子模型，覆盖了200多个因子。"台下一位机构投资者问："那你们的因子是怎么筛选出来的？"基金经理愣了一下，说："我们把所有能想到的因子都试了一遍，回测效果好的就留下。"</p>
 
@@ -59,17 +61,43 @@
         <p>1976年，Stephen Ross提出了<strong>套利定价理论（Arbitrage Pricing Theory, APT）</strong>，挑战了CAPM的统治地位。与CAPM不同，APT不假设"所有投资者都使用均值-方差优化"，而只基于一个更朴素的逻辑：<strong>如果两个资产在所有风险维度上完全一致，但价格不同，就存在套利机会</strong>。</p>
 
         <pre><code># APT的多因子表达式
-E(R_i) = R_f + β_i1 × λ_1 + β_i2 × λ_2 + ... + β_ik × λ_k
+# E(R_i) = R_f
+#        + β_i1 × λ_1 + β_i2 × λ_2
+#        + ... + β_ik × λ_k
 
 # 其中：
-# β_ik = 资产i对因子k的暴露（Factor Loading）
-# λ_k = 因子k的风险溢价（Risk Premium / Factor Return）
-# 每个λ_k代表承担一单位因子k风险所获得的额外收益
+# β_ik = 资产 i 对因子 k 的暴露
+#        （Factor Loading）
+# λ_k = 因子 k 的风险溢价
+#       （Risk Premium）
+# 每个 λ_k 代表承担一单位因子 k 风险
+# 所获得的额外收益
 
-# 例如：一个三因子APT模型
-# E(R_i) = 1.8% + 0.9 × 4.0% + 0.3 × 2.5% + (-0.2) × 3.0%
+# 例如：一个三因子 APT 模型
+# E(R_i) = 1.8% + 0.9 × 4.0%
+#        + 0.3 × 2.5% + (-0.2) × 3.0%
 #        = 1.8% + 3.6% + 0.75% - 0.6%
 #        = 5.55%</code></pre>
+
+        <div class="math-equation" role="group" aria-label="套利定价理论表达式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="套利定价理论表达式，可横向滚动">
+                <math display="block" aria-label="预期收益等于无风险利率加上各因子暴露与因子溢价乘积之和">
+                    <mrow>
+                        <mi>E</mi>
+                        <mo>(</mo>
+                        <msub><mi>R</mi><mi>i</mi></msub>
+                        <mo>)</mo>
+                        <mo>=</mo>
+                        <msub><mi>R</mi><mi>f</mi></msub>
+                        <mo>+</mo>
+                        <munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></munderover>
+                        <msub><mi>β</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub>
+                        <msub><mi>λ</mi><mi>k</mi></msub>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="beta ik"><msub><mi>β</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub></math> 为资产 <math class="math-inline" aria-label="i"><mi>i</mi></math> 对因子 <math class="math-inline" aria-label="k"><mi>k</mi></math> 的暴露，<math class="math-inline" aria-label="lambda k"><msub><mi>λ</mi><mi>k</mi></msub></math> 为因子 <math class="math-inline" aria-label="k"><mi>k</mi></math> 的风险溢价。APT 只说明“存在一组因子”，并不指定具体是哪些——这是它与下文多因子模型的分界。理论出处：Ross, <em>The Arbitrage Theory of Capital Asset Pricing</em>, 1976。</p>
+            </div>
+        </div>
 
         <p>APT相对于CAPM的优势在于：</p>
         <ul>
@@ -85,17 +113,83 @@ E(R_i) = R_f + β_i1 × λ_1 + β_i2 × λ_2 + ... + β_ik × λ_k
         <p>1992年，Eugene Fama和Kenneth French发表了那篇改变了整个金融学术界的论文《The Cross-Section of Expected Stock Returns》。他们发现，除了市场β之外，还有两个变量对股票收益有系统性的解释力：<strong>市值</strong>和<strong>账面市值比</strong>。</p>
 
         <pre><code># Fama-French三因子模型
-E(R_i) - R_f = β_mkt × (R_m - R_f) + β_smb × SMB + β_hml × HML + α_i
+# E(R_i) - R_f = β_mkt × (R_m - R_f)
+#              + β_smb × SMB
+#              + β_hml × HML + α_i
 
 # 因子定义：
-# SMB（Small Minus Big）= 小盘股收益 - 大盘股收益
-# HML（High Minus Low）= 高账面市值比（价值股）收益 - 低账面市值比（成长股）收益
+# SMB = 小盘股收益 - 大盘股收益
+#   （Small Minus Big）
+# HML = 高账面市值比（价值股）收益
+#     - 低账面市值比（成长股）收益
+#   （High Minus Low）
 
 # 例如：某只小盘价值股的因子暴露
-# 假设：β_mkt = 1.05, β_smb = 0.60, β_hml = 0.40
-# 市场溢价 = 6%, SMB = 2.5%, HML = 3.5%, R_f = 1.8%
-# E(R_i) = 1.8% + 1.05×6% + 0.60×2.5% + 0.40×3.5%
-#        = 1.8% + 6.3% + 1.5% + 1.4% = 11.0%</code></pre>
+# β_mkt = 1.05, β_smb = 0.60, β_hml = 0.40
+# 市场溢价 = 6%, SMB = 2.5%
+# HML = 3.5%, R_f = 1.8%
+# E(R_i) = 1.8% + 1.05×6% + 0.60×2.5%
+#        + 0.40×3.5%
+#        = 1.8% + 6.3% + 1.5% + 1.4%
+#        = 11.0%</code></pre>
+
+        <div class="math-equation" role="group" aria-label="Fama-French 三因子模型">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="Fama-French 三因子模型，可横向滚动">
+                <math display="block" aria-label="超额收益等于市场因子规模因子与价值因子的暴露乘以各自溢价之和再加阿尔法">
+                    <mrow>
+                        <mi>E</mi>
+                        <mo>(</mo>
+                        <msub><mi>R</mi><mi>i</mi></msub>
+                        <mo>)</mo>
+                        <mo>−</mo>
+                        <msub><mi>R</mi><mi>f</mi></msub>
+                        <mo>=</mo>
+                        <msub><mi>β</mi><mi>m</mi></msub>
+                        <mo>(</mo>
+                        <msub><mi>R</mi><mi>m</mi></msub>
+                        <mo>−</mo>
+                        <msub><mi>R</mi><mi>f</mi></msub>
+                        <mo>)</mo>
+                        <mo>+</mo>
+                        <msub><mi>β</mi><mi>s</mi></msub>
+                        <mi>SMB</mi>
+                        <mo>+</mo>
+                        <msub><mi>β</mi><mi>h</mi></msub>
+                        <mi>HML</mi>
+                    </mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="R f"><msub><mi>R</mi><mi>f</mi></msub></math> 为无风险利率，<math class="math-inline" aria-label="R m"><msub><mi>R</mi><mi>m</mi></msub></math> 为市场组合收益，<math class="math-inline" aria-label="beta m"><msub><mi>β</mi><mi>m</mi></msub></math> 为市场暴露，<math class="math-inline" aria-label="beta s"><msub><mi>β</mi><mi>s</mi></msub></math>、<math class="math-inline" aria-label="beta h"><msub><mi>β</mi><mi>h</mi></msub></math> 分别为规模、价值因子暴露，<math class="math-inline" aria-label="alpha"><msub><mi>α</mi><mi>i</mi></msub></math> 为模型无法解释的超额收益（截距项）。理论出处：Fama &amp; French, <em>The Cross-Section of Expected Stock Returns</em>, 1992。</p>
+            </div>
+        </div>
+
+        <figure>
+            <svg role="img" aria-labelledby="apt-title apt-desc" viewBox="0 0 840 230" xmlns="http://www.w3.org/2000/svg">
+                <title id="apt-title">三因子模型的预期收益来源分解</title>
+                <desc id="apt-desc">以 R_f=1.8%、市场溢价 6.3%、规模溢价 1.5%、价值溢价 1.4% 为例，预期收益 11.0% 由四部分贡献堆叠而成，其中市场溢价占比最大。</desc>
+                <rect width="840" height="230" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <text x="420" y="38" font-size="15" font-weight="700" fill="#1e293b" text-anchor="middle">预期收益 E(R_i) ≈ 11.0% 的来源分解</text>
+                    <rect x="60" y="70" width="720" height="60" rx="10" fill="#e2e8f0"/>
+                    <rect x="60" y="70" width="118" height="60" rx="10" fill="#94a3b8"/>
+                    <rect x="178" y="70" width="412" height="60" fill="#2563b8"/>
+                    <rect x="590" y="70" width="98" height="60" fill="#d06d4d"/>
+                    <rect x="688" y="70" width="92" height="60" fill="#7461ba"/>
+                    <text x="118" y="105" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">R_f 1.8%</text>
+                    <text x="384" y="105" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">市场溢价 6.3%</text>
+                    <text x="639" y="105" font-size="11" fill="#ffffff" text-anchor="middle">SMB 1.5%</text>
+                    <text x="734" y="105" font-size="11" fill="#ffffff" text-anchor="middle">HML 1.4%</text>
+                    <rect x="60" y="152" width="12" height="12" fill="#2563b8"/>
+                    <text x="80" y="162" font-size="13" fill="#53676d">市场溢价 6.3%</text>
+                    <rect x="300" y="152" width="12" height="12" fill="#94a3b8"/>
+                    <text x="320" y="162" font-size="13" fill="#53676d">无风险利率 1.8%</text>
+                    <rect x="60" y="182" width="12" height="12" fill="#d06d4d"/>
+                    <text x="80" y="192" font-size="13" fill="#53676d">规模溢价 1.5%</text>
+                    <rect x="300" y="182" width="12" height="12" fill="#7461ba"/>
+                    <text x="320" y="192" font-size="13" fill="#53676d">价值溢价 1.4%</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 10-1</strong>　三因子模型的预期收益来源分解。同一只股票的预期收益可以拆成“无风险利率 + 各因子暴露 × 因子溢价”——<strong>市场溢价是最大的一块，风格因子（SMB、HML）是补充</strong>。这也是多因子模型与单因子 CAPM 的根本区别。数值为本课程<strong>教学示意</strong>算例（β_mkt=1.05、β_smb=0.60、β_hml=0.40）。</figcaption>
+        </figure>
 
         <table>
             <thead>
@@ -119,10 +213,15 @@ E(R_i) - R_f = β_mkt × (R_m - R_f) + β_smb × SMB + β_hml × HML + α_i
         <p>1997年，Mark Carhart在三因子的基础上加入了<strong>动量因子（Momentum, MOM）</strong>。动量效应指的是：过去12个月涨幅最大的股票（赢家），未来会继续跑赢过去12个月跌幅最大的股票（输家）。</p>
 
         <pre><code># Carhart四因子模型
-E(R_i) - R_f = β_mkt × MKT + β_smb × SMB + β_hml × HML + β_mom × MOM + α_i
+# E(R_i) - R_f = β_mkt × MKT
+#              + β_smb × SMB + β_hml × HML
+#              + β_mom × MOM + α_i
 
-# MOM（Momentum）= 过去12个月赢家组合收益 - 输家组合收益
-# 在美国市场，动量因子年化溢价约8-10%，是最强的单一异象之一</code></pre>
+# MOM（Momentum）= 赢家组合收益
+#                 - 输家组合收益
+# 即过去12个月表现最好减最差
+# 在美国市场，动量因子年化溢价
+# 约8-10%，是最强的单一异象之一</code></pre>
 
         <div class="warning">
             <strong>踩坑实录：</strong>动量因子在A股市场非常"调皮"——它在2013-2015年的中小创牛市中极其有效，但在2016-2017年的"熔断行情"中连续20个月失效，最大回撤超过30%。很多2015年底成立的中性策略产品因为重仓动量因子，在2016年被打穿了止损线。教训是：<strong>每个因子都有"灾难期"</strong>，分散化不仅适用于资产，也适用于因子。
@@ -196,6 +295,8 @@ E(R_i) - R_f = β_mkt × MKT + β_smb × SMB + β_hml × HML + β_mom × MOM + �
             <strong>给投资者的建议：</strong>与其追逐"因子动物园"中的数百个因子，不如聚焦3-5个有坚实经济逻辑支撑的核心因子：价值、质量、动量（趋势）、低波动、规模。将这些因子做<strong>因子配置（Factor Allocation）</strong>和<strong>因子择时（Factor Timing）</strong>，远胜于试图抓住所有因子。
         </div>
 
+        <p class="eq-label">说明：本章各因子的历史溢价区间、“因子动物园”数量与 A 股因子的有效性区间，均为本课程<strong>教学示意</strong>，用于展示量级与方向；具体数值随样本区间、构造方法与市场环境变化，请以原始论文与数据终端为准。</p>
+
         <div class="highlight">
             <strong>本章要点回顾：</strong>
             <ul>
@@ -214,7 +315,8 @@ E(R_i) - R_f = β_mkt × MKT + β_smb × SMB + β_hml × HML + β_mom × MOM + �
             <a href="index.html">📖 返回目录</a>
             <a href="11.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
