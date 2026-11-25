@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第11章 有效市场假说</h2>
+        <h1>第11章 有效市场假说</h1>
 
         <p>2019年8月，国内一位知名的"价值投资大V"在社交媒体上高调宣布：他满仓买入某只ST股票，理由是"市场错了，这个公司至少值50亿"。一个月后，这只股票因为连续20个交易日收盘价低于1元而退市，他的粉丝们损失惨重。</p>
 
@@ -90,11 +92,42 @@
             </tbody>
         </table>
 
+        <figure>
+            <svg role="img" aria-labelledby="emh-title emh-desc" viewBox="0 0 840 360" xmlns="http://www.w3.org/2000/svg">
+                <title id="emh-title">有效市场假说的三种形式与信息集</title>
+                <desc id="emh-desc">三个嵌套的信息集合：最内层为弱式（历史价格与成交量），中间为半强式（全部公开信息），最外层为强式（含内幕信息）；信息集逐层扩大。</desc>
+                <rect width="840" height="360" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <rect x="60" y="46" width="720" height="266" rx="26" fill="#f1e9ff" stroke="#7461ba" stroke-width="2"/>
+                    <rect x="170" y="98" width="500" height="162" rx="20" fill="#e0edff" stroke="#2563b8" stroke-width="2"/>
+                    <rect x="292" y="150" width="256" height="68" rx="16" fill="#fef3e2" stroke="#d06d4d" stroke-width="2"/>
+                    <text x="420" y="74" font-size="15" font-weight="700" fill="#5f4f9a" text-anchor="middle">强式有效：全部信息（含内幕消息）</text>
+                    <text x="420" y="126" font-size="14" font-weight="700" fill="#1e40af" text-anchor="middle">半强式有效：所有公开信息</text>
+                    <text x="420" y="180" font-size="13" font-weight="700" fill="#b0502f" text-anchor="middle">弱式有效</text>
+                    <text x="420" y="200" font-size="12" fill="#8a5a3f" text-anchor="middle">历史价格与成交量</text>
+                    <text x="420" y="340" font-size="13" fill="#53676d" text-anchor="middle">信息集逐层扩大：弱式 ⊂ 半强式 ⊂ 强式</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 11-1</strong>　有效市场假说的三种形式。三个信息集是<strong>嵌套关系</strong>：越往外，价格理应反映的信息越多，能被稳定利用的定价错误越少。检验层次也不同：弱式否定了技术分析的有效性、半强式否定了基本面分析的持续优势、强式则连内幕交易也无法获利（实证上被否定）。图为本课程教学示意。</figcaption>
+        </figure>
+
         <h2>11.2 实证证据：支持与反对</h2>
 
         <h3>支持EMH的证据</h3>
 
         <p><strong>随机游走（Random Walk）：</strong>大量统计检验发现，短期股价变动近似于随机游走——今天的涨跌几乎无法预测明天的涨跌。如果市场不是有效的，你会预期某种"模式"的存在，但数据中找不到一致的模式。</p>
+
+        <div class="math-equation" role="group" aria-label="随机游走与鞅性质">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="随机游走与鞅性质，可横向滚动">
+                <math display="block" aria-label="随机游走：下一期价格等于当期价格加独立的白噪声">
+                    <mrow><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>P</mi><mi>t</mi></msub><mo>+</mo><msub><mi>ε</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow>
+                </math>
+                <math display="block" aria-label="鞅性质：以当期信息为条件的下期价格期望等于当期价格乘一加预期收益">
+                    <mrow><mi>E</mi><mo>(</mo><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>|</mo><msub><mi>I</mi><mi>t</mi></msub><mo>)</mo><mo>=</mo><msub><mi>P</mi><mi>t</mi></msub><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="epsilon"><msub><mi>ε</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></math> 是与历史信息无关的白噪声（均值 0），<math class="math-inline" aria-label="I t"><msub><mi>I</mi><mi>t</mi></msub></math> 为第 <math class="math-inline" aria-label="t"><mi>t</mi></math> 期可得的信息集。若价格满足鞅性质，则仅凭历史价格无法系统性地赚取超额收益——这正是弱式有效的数学表述。</p>
+            </div>
+        </div>
 
         <p><strong>共同基金业绩：</strong>标准普尔2024年的SPIVA报告显示，过去15年中，超过85%的主动管理型美国大盘基金跑不赢标普500指数。在中国，2020-2025年期间，公募偏股基金的中位数收益率也未能持续跑赢沪深300全收益指数。如果市场不是有效的，为什么专业的基金经理（应该是最聪明的投资者）整体上跑不赢指数呢？</p>
 
@@ -117,7 +150,7 @@
         <h3>动量与反转（Momentum and Reversal）</h3>
         <p>Jegadeesh和Titman在1993年发现，买入过去6-12个月涨幅最大的股票、卖出跌幅最大的股票可以产生显著的超额收益。但有趣的是，在更长的持有期（3-5年）中，这个效应会反转——前期涨幅最大的股票在后期反而表现更差（长期反转效应）。</p>
 
-        <pre><code># 动量策略的简单实现（Python示例）
+        <pre style="overflow-x:auto"><code># 动量策略的简单实现（Python示例）
 import pandas as pd
 import numpy as np
 
@@ -173,6 +206,8 @@ def momentum_strategy(returns, lookback=12, holding=3, top_pct=0.1):
             <li><strong>不可分散的情绪风险：</strong>2025年的一项研究表明，投资者情绪存在一个无法被套利的"系统性成分"——即使机构投资者知道情绪导致的错误定价，也不敢贸然反向操作，因为"情绪可能持续更久"（凯恩斯的名言再次被验证）。</li>
         </ul>
 
+        <p class="eq-label">说明：本章引用的实证结论（如 SPIVA 跑输比例、盈余公告后漂移、内幕交易占比、大奖章基金收益等）为学术与行业文献的常见引用值，仅作教学示意；精确口径随样本区间与统计方法变化，请以原始报告与监管披露为准。</p>
+
         <h2>11.5 适应性市场假说（AMH）</h2>
 
         <p>面对EMH和行为金融学之间几十年的僵局，MIT的Andrew Lo在2004年（并在2017年出版的《适应性市场》中详细阐述）提出了一个折中框架——<strong>适应性市场假说（Adaptive Market Hypothesis, AMH）</strong>。</p>
@@ -219,7 +254,8 @@ def momentum_strategy(returns, lookback=12, holding=3, top_pct=0.1):
             <a href="index.html">📖 返回目录</a>
             <a href="12.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
