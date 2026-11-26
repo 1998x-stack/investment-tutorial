@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第28章 综合实战项目</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +43,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html" class="active">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第28章 综合实战项目</h2>
+        <h1>第28章 综合实战项目</h1>
 
         <p>2015年6月12日，上证指数站上5178点。一位北京的投资者老王在朋友的怂恿下，将家里的300万积蓄全部投入了股市——"国家需要牛市"、"万点不是梦"。他没有资产配置，没有风险预算，甚至不知道PE是什么。两个月后，指数跌到了2850点，300万变成了120万。</p>
 
@@ -55,6 +58,39 @@
         <div class="highlight">
             <strong>项目设定：</strong>你是一名个人投资者，于2026年7月获得了一笔1000万人民币的闲置资金（可能是出售房产、年终奖金或遗产继承），投资期限3年（2026年7月 - 2029年6月）。你的目标是：在严格控制下行风险的前提下，实现超越通胀的稳健增值。
         </div>
+
+        <figure>
+            <svg role="img" aria-labelledby="loop-title loop-desc" viewBox="0 0 840 340" xmlns="http://www.w3.org/2000/svg">
+                <title id="loop-title">投资组合管理的闭环流程</title>
+                <desc>从撰写投资政策声明到资本市场假设、战略资产配置、策略实施、监控再平衡与绩效归因，最后归因结果又反哺下一期的目标与假设，形成循环。</desc>
+                <rect width="840" height="340" rx="18" fill="#f7fafc"/>
+                <defs><marker id="lp-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#94a3b8"/></marker></defs>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <rect x="70" y="60" width="220" height="64" rx="12" fill="#e0edfa" stroke="#2563b8" stroke-width="2"/>
+                    <rect x="310" y="60" width="220" height="64" rx="12" fill="#e6f4ea" stroke="#2f855a" stroke-width="2"/>
+                    <rect x="550" y="60" width="220" height="64" rx="12" fill="#fdf3e0" stroke="#b7791f" stroke-width="2"/>
+                    <rect x="550" y="226" width="220" height="64" rx="12" fill="#ece7fa" stroke="#7461ba" stroke-width="2"/>
+                    <rect x="310" y="226" width="220" height="64" rx="12" fill="#e6f4ea" stroke="#2f855a" stroke-width="2"/>
+                    <rect x="70" y="226" width="220" height="64" rx="12" fill="#fde8e8" stroke="#c53030" stroke-width="2"/>
+                    <g text-anchor="middle">
+                        <text x="180" y="88" font-size="15" font-weight="600">① 撰写 IPS</text><text x="180" y="110" font-size="12" fill="#475569">目标·风险预算·约束</text>
+                        <text x="420" y="88" font-size="15" font-weight="600">② 资本市场假设</text><text x="420" y="110" font-size="12" fill="#475569">预期收益·波动·相关</text>
+                        <text x="660" y="88" font-size="15" font-weight="600">③ 战略资产配置</text><text x="660" y="110" font-size="12" fill="#475569">均值-方差 + 约束</text>
+                        <text x="660" y="254" font-size="15" font-weight="600">④ 策略实施</text><text x="660" y="276" font-size="12" fill="#475569">核心-卫星·ETF</text>
+                        <text x="420" y="254" font-size="15" font-weight="600">⑤ 监控与再平衡</text><text x="420" y="276" font-size="12" fill="#475569">定期 + 阈值触发</text>
+                        <text x="180" y="254" font-size="15" font-weight="600">⑥ 绩效归因</text><text x="180" y="276" font-size="12" fill="#475569">Brinson·风险归因</text>
+                    </g>
+                    <g stroke="#94a3b8" stroke-width="2" fill="none">
+                        <path d="M290 92 H310" marker-end="url(#lp-arrow)"/><path d="M530 92 H550" marker-end="url(#lp-arrow)"/>
+                        <path d="M660 124 V226" marker-end="url(#lp-arrow)"/>
+                        <path d="M550 258 H530" marker-end="url(#lp-arrow)"/><path d="M310 258 H290" marker-end="url(#lp-arrow)"/>
+                        <path d="M180 226 V124" marker-end="url(#lp-arrow)"/>
+                    </g>
+                    <text x="420" y="180" text-anchor="middle" font-size="12.5" fill="#53676d">闭环：归因结果反哺下一期的目标与假设，而不是“设完就不再动”</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 28-1</strong>　投资组合管理的闭环流程。IPS 定目标与风险预算，CMA 给预期参数，SAA 由均值-方差最优化加约束得出，随后是实施与再平衡；到期的归因结果会回到起点，修正下一期的假设与目标。阶段划分为一般性<strong>教学示意</strong>。</figcaption>
+        </figure>
 
         <h2>步骤1：撰写投资政策声明（IPS）</h2>
 
@@ -298,12 +334,15 @@ selection_effect = sum(
 
         <p>祝你在投资的道路上，行稳致远，收获满满。我们江湖再见！</p>
 
+        <p class="eq-label">说明：本章的假设收益、波动率、相关系数、最优权重与归因数字（如各类资产预期收益、SAA 权重、Brinson 效应与 3 年累计收益等）均为演示用<strong>教学示意</strong>，只用于展示“假设→配置→实施→归因”的方法链路，并非对未来行情的预测或实盘业绩；具体参数请以你自己基于最新数据的 CMA 为准。</p>
+
         <div class="footer-nav">
             <a href="27.html">← 上一章</a>
             <a href="index.html">📖 返回目录</a>
             <a href="javascript:void(0)">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
