@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第23章 Python投资分析入门</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,14 +43,48 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第23章 Python投资分析入门</h2>
+        <h1>第23章 Python投资分析入门</h1>
 
         <p>我有个朋友叫小张，在某券商研究所做研究员。他入行第一年，师傅丢给他一个任务："把过去五年所有A股的财务数据拉出来，算一下每个行业的ROE中位数变化趋势。"小张一听，打开了Excel，准备手动复制粘贴——然后他对着3000多只股票的数据量沉默了。当晚，他花了8个小时，终于用Excel的VLOOKUP和透视表搞定了。但第二天师傅轻飘飘地说了一句："哦对了，每个月要更新一次。"小张当场崩溃。后来他学了Python，原来同样的工作只需要30行代码、3分钟就跑完了。</p>
 
         <p>这个故事不是段子，是每天都在发生的事情。在2025年的投资研究中，Excel早已无法应对海量数据的处理需求。Python凭借其丰富的数据科学生态系统（pandas、numpy、matplotlib、scipy），已经成为投资分析领域的"通用语言"。无论你是做基本面研究、量化策略开发，还是机器学习模型，Python都是绕不开的工具。本章将带你从一个零基础的投资者视角，建立起Python投资分析的完整工具箱。</p>
+
+        <figure>
+            <svg role="img" aria-labelledby="py-title py-desc" viewBox="0 0 840 300" xmlns="http://www.w3.org/2000/svg">
+                <title id="py-title">Python 投资分析的数据流水线</title>
+                <desc id="py-desc">从数据获取、清洗对齐、收益率与风险指标，到组合优化与回测归因的五个阶段，箭头表示数据单向流动。</desc>
+                <rect width="840" height="300" rx="18" fill="#f7fafc"/>
+                <defs><marker id="py-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#94a3b8"/></marker></defs>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" font-size="13.5" fill="#1e293b">
+                    <rect x="30" y="90" width="145" height="112" rx="12" fill="#e0edfa" stroke="#2563b8" stroke-width="2"/>
+                    <rect x="195" y="90" width="145" height="112" rx="12" fill="#e6f4ea" stroke="#2f855a" stroke-width="2"/>
+                    <rect x="360" y="90" width="145" height="112" rx="12" fill="#fdf3e0" stroke="#b7791f" stroke-width="2"/>
+                    <rect x="525" y="90" width="145" height="112" rx="12" fill="#ece7fa" stroke="#7461ba" stroke-width="2"/>
+                    <rect x="690" y="90" width="145" height="112" rx="12" fill="#fde8e8" stroke="#c53030" stroke-width="2"/>
+                    <g text-anchor="middle" font-weight="600">
+                        <text x="102" y="122">① 数据获取</text><text x="267" y="122">② 清洗对齐</text>
+                        <text x="432" y="122">③ 收益率</text><text x="597" y="122">④ 组合优化</text><text x="762" y="122">⑤ 回测归因</text>
+                    </g>
+                    <g text-anchor="middle" font-size="12" fill="#475569">
+                        <text x="102" y="152">AkShare / yfinance</text><text x="102" y="174">行情·财务·宏观</text>
+                        <text x="267" y="152">缺失值·复权</text><text x="267" y="174">时间序列对齐</text>
+                        <text x="432" y="152">简单 / 对数收益</text><text x="432" y="174">波动率·Beta·VaR</text>
+                        <text x="597" y="152">scipy.optimize</text><text x="597" y="174">最小方差·最大夏普</text>
+                        <text x="762" y="152">信号→持仓→评估</text><text x="762" y="174">收益·回撤</text>
+                    </g>
+                    <g stroke="#94a3b8" stroke-width="2" fill="none">
+                        <path d="M175 146 H195" marker-end="url(#py-arrow)"/><path d="M340 146 H360" marker-end="url(#py-arrow)"/>
+                        <path d="M505 146 H525" marker-end="url(#py-arrow)"/><path d="M670 146 H690" marker-end="url(#py-arrow)"/>
+                    </g>
+                    <text x="420" y="250" text-anchor="middle" font-size="12.5" fill="#53676d">上游输出是下游输入：收益率序列是连接市场数据与风险 / 组合模型的中间产物</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 23-1</strong>　Python 投资分析的数据流水线。每个阶段的输出是下一阶段的输入：收益率序列是连接原始行情与风险 / 组合模型的中间产物，因此第 23.3 节先把价格转换为收益率，再谈优化与回测。流程划分与库名为一般性<strong>教学示意</strong>，实际项目可能合并或细分步骤。</figcaption>
+        </figure>
 
         <h2>23.1 环境搭建：开始你的Python之旅</h2>
 
@@ -363,12 +399,15 @@ def constrained_portfolio(mean_ret, cov, max_weight=0.15):
 
         <p>掌握了Python投资分析的基本功之后，下一章我们将进入更宏观的层面——<strong>投资研究与分析框架</strong>。从宏观到行业再到公司，你会学到一套完整的"自上而下"研究方法论，以及如何撰写一份让基金经理认可的研报。准备好了吗？让我们把代码能力转化研究能力！</p>
 
+        <p class="eq-label">说明：本章提及的库版本、接口名称、调用频率限制与示例数字（如数据行数、年化收益 / 波动率、夏普比率、回撤等）均为一般性<strong>教学示意</strong>与常见经验区间，用于展示工作流程与量级，未逐笔核验；具体 API 行为与数据口径请以各库官方文档与数据源最新披露为准。</p>
+
         <div class="footer-nav">
             <a href="22.html">← 上一章</a>
             <a href="index.html">📖 返回目录</a>
             <a href="24.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
