@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第6章 金融市场与交易机制</h2>
+        <h1>第6章 金融市场与交易机制</h1>
 
         <p>大家好！前面几章我们认识了各种投资工具——股票、债券、基金、衍生品。这一章我们来看这些工具"流动"的地方——<strong>金融市场</strong>本身。</p>
 
@@ -100,6 +102,51 @@
         <h3>指令簿（Order Book）</h3>
         <p>交易所维护着一个"指令簿"，记录所有买入和卖出的委托单。买方的最高出价叫<strong>Bid</strong>，卖方的最低要价叫<strong>Ask</strong>。Bid和Ask之间的差距叫<strong>买卖价差（Bid-Ask Spread）</strong>——这是交易成本的重要组成部分。</p>
 
+        <div class="math-equation" role="group" aria-label="买卖价差与交易成本公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="买卖价差与交易成本公式，可横向滚动">
+                <math display="block" aria-label="相对买卖价差等于卖价减买价再除以中间价">
+                    <mrow><mtext>相对价差</mtext><mo>=</mo><mfrac><mrow><mi>Ask</mi><mo>−</mo><mi>Bid</mi></mrow><mi>Mid</mi></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="年化交易成本约等于年换手次数乘以两次佣金加印花税加相对价差">
+                    <mrow><msub><mi>C</mi><mtext>年化</mtext></msub><mo>≈</mo><mi>n</mi><mo>×</mo><mo>(</mo><mn>2</mn><mi>c</mi><mo>+</mo><mi>τ</mi><mo>+</mo><mtext>相对价差</mtext><mo>)</mo></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="Mid"><mi>Mid</mi></math> 为中间价，<math class="math-inline" aria-label="n"><mi>n</mi></math> 为年换手（完整买卖来回）次数，<math class="math-inline" aria-label="c"><mi>c</mi></math> 为单边佣金率，<math class="math-inline" aria-label="tau"><mi>τ</mi></math> 为印花税率。换手次数 <math class="math-inline" aria-label="n"><mi>n</mi></math> 是杠杆最大的变量：任何一项费率都抵不过“交易太频繁”。</p>
+            </div>
+        </div>
+
+        <figure>
+            <svg role="img" aria-labelledby="book-title book-desc" viewBox="0 0 840 360" xmlns="http://www.w3.org/2000/svg">
+                <title id="book-title">指令簿的买卖盘与买卖价差</title>
+                <desc id="book-desc">上半为卖盘（Ask，最低要价 10.02），下半为买盘（Bid，最高出价 10.00），两侧最优价之间的差额就是买卖价差。</desc>
+                <rect width="840" height="360" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <text x="420" y="34" font-size="13" fill="#53676d" text-anchor="middle">委托量（手）</text>
+                    <g fill="#d06d4d">
+                        <rect x="200" y="46" width="120" height="28" rx="4"/>
+                        <rect x="200" y="86" width="240" height="28" rx="4"/>
+                        <rect x="200" y="126" width="360" height="28" rx="4"/>
+                    </g>
+                    <g fill="#2563b8">
+                        <rect x="200" y="206" width="340" height="28" rx="4"/>
+                        <rect x="200" y="246" width="200" height="28" rx="4"/>
+                        <rect x="200" y="286" width="112" height="28" rx="4"/>
+                    </g>
+                    <g font-size="13" fill="#1e293b" text-anchor="end">
+                        <text x="192" y="65">10.04</text><text x="192" y="105">10.03</text>
+                        <text x="192" y="145">10.02</text><text x="192" y="225">10.00</text>
+                        <text x="192" y="265">9.99</text><text x="192" y="305">9.98</text>
+                    </g>
+                    <text x="212" y="166" font-size="12" fill="#b0502f">卖盘 Ask：最低要价 10.02</text>
+                    <text x="212" y="330" font-size="12" fill="#1e40af">买盘 Bid：最高出价 10.00</text>
+                    <line x1="180" y1="140" x2="180" y2="220" stroke="#7461ba" stroke-width="3"/>
+                    <line x1="170" y1="140" x2="195" y2="140" stroke="#7461ba" stroke-width="3"/>
+                    <line x1="170" y1="220" x2="195" y2="220" stroke="#7461ba" stroke-width="3"/>
+                    <text x="624" y="186" font-size="13" fill="#5f4f9a">价差 = Ask − Bid = 0.02 元</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 6-1</strong>　指令簿的买盘与卖盘。红色为卖盘（Ask），蓝色为买盘（Bid）；最优卖价与最优买价之间的差额就是买卖价差。即使股价原地不动，一买一卖也要先跨越这个价差，这正是“交易成本”的微观来源。委托量为<strong>教学示意</strong>数据，用于展示盘口结构。</figcaption>
+        </figure>
+
         <table>
             <thead>
                 <tr><th>术语</th><th>含义</th><th>示例</th></tr>
@@ -123,7 +170,7 @@
 
         <p>很多散户只关注股票的涨跌，忽视了交易成本对投资收益的侵蚀。</p>
 
-        <pre><code># 交易成本对收益的侵蚀（示例）
+        <pre style="overflow-x:auto"><code># 交易成本对收益的侵蚀（示例）
 # 假设你是一位"高频交易"爱好者，每周买卖一次
 
 # 单边交易成本：
@@ -187,6 +234,8 @@
             </ul>
         </div>
 
+        <p class="eq-label">说明：本章的市场规模、成交额、暗池占比、融资余额、破发率与案例金额（如花旗乌龙单、Flash Crash、印花税等）均为公开报道的近似值与本课程<strong>教学示意</strong>，仅用于展示量级与方向，未逐笔核验；交易规则与费率请以交易所、证监会与券商的最新披露为准。</p>
+
         <p>金融市场的复杂机制你可能一下子记不住所有细节，但请记住核心结论：<strong>市场是有摩擦的</strong>——交易成本、信息不对称、制度限制都在影响你的投资回报。理解这些"摩擦"，你就能比90%的散户做得更好。下一章我们将进入投资学最核心的理论框架——<strong>风险与收益</strong>。这是理解一切投资模型的基础，一定要认真看！</p>
 
         <div class="footer-nav">
@@ -194,7 +243,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="07.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
