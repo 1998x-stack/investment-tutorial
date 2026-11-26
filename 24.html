@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第24章 投资研究与分析框架</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,14 +43,43 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第24章 投资研究与分析框架</h2>
+        <h1>第24章 投资研究与分析框架</h1>
 
         <p>前几年有个事情让我印象特别深。2021年春节后，有位散户朋友兴冲冲地告诉我，他看了某大V的分析，认定某新能源公司"估值低估、成长确定"，全仓杀入。我问他是怎么研究的，他说："我看了他们官网，产品卖得不错，市盈率才30倍，比同行便宜。"结果那家公司2021年下半年遭遇上游原材料暴涨、下游需求疲软的双重打击，股价腰斩，市盈率从30倍变成了"亏损"。这位朋友后来跟我复盘时承认，他当时连这家公司的毛利率趋势、现金流状况、上下游议价能力都没有分析过——他的"研究"，本质上只是看了几篇软文和一份财报摘要。</p>
 
         <p>这就是典型的"研究深度不足"。投资研究不是看几个指标就下结论，而是一套从宏观到行业再到公司的系统化分析流程。专业的基金经理和研究员花几周甚至几个月研究一家公司，不是因为他们"效率低"，而是因为只有足够深度的研究，才能形成有信息优势的投资决策。本章将带你完整走一遍这套"自上而下"的研究框架。</p>
+
+        <figure>
+            <svg role="img" aria-labelledby="top-title top-desc" viewBox="0 0 840 360" xmlns="http://www.w3.org/2000/svg">
+                <title id="top-title">自上而下的投资研究框架</title>
+                <desc id="top-desc">宏观、行业、公司、估值四个层次逐级收敛，每一层回答一个不同的问题，向下箭头表示研究深度的递进。</desc>
+                <rect width="840" height="360" rx="18" fill="#f7fafc"/>
+                <defs><marker id="td-arrow" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto"><path d="M0 0 L4 6 L8 0 z" fill="#94a3b8"/></marker></defs>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" fill="#1e293b">
+                    <rect x="100" y="34" width="640" height="62" rx="12" fill="#e0edfa" stroke="#2563b8" stroke-width="2"/>
+                    <rect x="180" y="112" width="480" height="62" rx="12" fill="#e6f4ea" stroke="#2f855a" stroke-width="2"/>
+                    <rect x="260" y="190" width="320" height="62" rx="12" fill="#fdf3e0" stroke="#b7791f" stroke-width="2"/>
+                    <rect x="320" y="268" width="200" height="62" rx="12" fill="#ece7fa" stroke="#7461ba" stroke-width="2"/>
+                    <g text-anchor="middle">
+                        <text x="420" y="60" font-size="15" font-weight="600">① 宏观分析</text>
+                        <text x="420" y="82" font-size="12.5" fill="#475569">该不该买？经济、通胀、货币与财政政策</text>
+                        <text x="420" y="138" font-size="15" font-weight="600">② 行业分析</text>
+                        <text x="420" y="160" font-size="12.5" fill="#475569">买哪个赛道？五力格局与行业生命周期</text>
+                        <text x="420" y="216" font-size="15" font-weight="600">③ 公司分析</text>
+                        <text x="420" y="238" font-size="12.5" fill="#475569">买哪家？商业模式与护城河</text>
+                        <text x="420" y="294" font-size="15" font-weight="600">④ 估值与决策</text>
+                        <text x="420" y="316" font-size="12.5" fill="#475569">什么价格买？DCF 与敏感性</text>
+                    </g>
+                    <line x1="66" y1="60" x2="66" y2="290" stroke="#94a3b8" stroke-width="2" marker-end="url(#td-arrow)"/>
+                    <text x="46" y="175" font-size="13" fill="#53676d" text-anchor="middle" transform="rotate(-90 46 175)">自上而下·逐级收敛</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 24-1</strong>　自上而下的研究框架。四个层次逐级收敛：宏观决定仓位与风格，行业决定赛道，公司决定标的，估值决定买入价格与安全边际。层次划分与问题提法为一般性<strong>教学示意</strong>，真实研究中常需在层与层之间反复迭代。</figcaption>
+        </figure>
 
         <h2>24.1 宏观分析：把脉经济大势</h2>
 
@@ -264,12 +295,15 @@ def dcf_valuation(fcf_0, growth_rate, discount_rate, terminal_growth, n_years=5)
 
         <p>有了完善的研究框架，下一步就是把这些研究成果转化为具体的交易策略。下一章<strong>交易策略设计</strong>，我们将深入探讨如何把研究观点变成可执行的投资策略——从趋势跟踪到均值回归，从因子策略到事件驱动，再到2025年最前沿的AI辅助选股。敬请期待！</p>
 
+        <p class="eq-label">说明：本章提及的利率水平、GDP 增速、行业案例与公司举例（如 10 年期国债收益率、信贷脉冲领先期、白酒 / 新能源等行业特征、DCF 永续增长假设等）均为公开信息的近似值与本课程<strong>教学示意</strong>，仅用于展示研究框架与量级，未逐笔核验；具体数据请以统计部门、央行与公司披露的最新口径为准。</p>
+
         <div class="footer-nav">
             <a href="23.html">← 上一章</a>
             <a href="index.html">📖 返回目录</a>
             <a href="25.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
