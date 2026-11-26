@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第15章 投资组合管理流程</h2>
+        <h1>第15章 投资组合管理流程</h1>
 
         <p>想象一下这个场景：你是一家管理着500亿元资产的保险公司的投资总监，手下的投资经理们每天盯着屏幕，有的买股票、有的买债券、有的做衍生品对冲。你的董事长每周一问："我们今年的收益目标能完成吗？"你的风控总监每天都在追问："如果下周股市暴跌20%，我们扛得住吗？"——这时候，你拿什么来回答他们？</p>
 
@@ -82,7 +84,7 @@
         <h3>风险承受能力</h3>
         <p>风险承受能力不是拍脑袋决定的，而是通过定量和定性分析得出的。一个常用的框架是<strong>风险承受能力问卷</strong>，评估投资者的财务状况、投资经验、心理承受能力等因素。对于机构投资者，通常还会进行<strong>资产负债管理（ALM）</strong>建模，模拟不同市场情景下资产负债表的稳健性。</p>
 
-        <pre><code># IPS风险承受能力评估示例（简化版）
+        <pre style="overflow-x:auto"><code># IPS风险承受能力评估示例（简化版）
         class RiskCapacity:
             def __init__(self, total_assets, annual_liabilities, liquidity_needs):
                 self.total_assets = total_assets
@@ -178,7 +180,22 @@
 
         <p>最经典的业绩归因框架是<strong>Brinson分解</strong>（Brinson, Hood & Beebower, 1986; Brinson, Singer & Beebower, 1991）。它将组合的超额收益分解为三个部分：</p>
 
-        <pre><code># Brinson归因分解计算公式
+        <div class="math-equation" role="group" aria-label="Brinson 归因分解公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="Brinson 归因分解公式，可横向滚动">
+                <math display="block" aria-label="资产配置效应等于组合与基准权重之差乘以基准收益的求和">
+                    <mrow><mtext>配置效应</mtext><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><mrow><mo>(</mo><msubsup><mi>w</mi><mi>i</mi><mi>p</mi></msubsup><mo>−</mo><msubsup><mi>w</mi><mi>i</mi><mi>b</mi></msubsup><mo>)</mo></mrow><msubsup><mi>r</mi><mi>i</mi><mi>b</mi></msubsup></mrow>
+                </math>
+                <math display="block" aria-label="选股效应等于基准权重乘以组合与基准收益之差的求和">
+                    <mrow><mtext>选股效应</mtext><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msubsup><mi>w</mi><mi>i</mi><mi>b</mi></msubsup><mrow><mo>(</mo><msubsup><mi>r</mi><mi>i</mi><mi>p</mi></msubsup><mo>−</mo><msubsup><mi>r</mi><mi>i</mi><mi>b</mi></msubsup><mo>)</mo></mrow></mrow>
+                </math>
+                <math display="block" aria-label="交互效应等于权重差与收益差乘积的求和">
+                    <mrow><mtext>交互效应</mtext><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><mrow><mo>(</mo><msubsup><mi>w</mi><mi>i</mi><mi>p</mi></msubsup><mo>−</mo><msubsup><mi>w</mi><mi>i</mi><mi>b</mi></msubsup><mo>)</mo></mrow><mrow><mo>(</mo><msubsup><mi>r</mi><mi>i</mi><mi>p</mi></msubsup><mo>−</mo><msubsup><mi>r</mi><mi>i</mi><mi>b</mi></msubsup><mo>)</mo></mrow></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="w i p"><msubsup><mi>w</mi><mi>i</mi><mi>p</mi></msubsup></math>、<math class="math-inline" aria-label="w i b"><msubsup><mi>w</mi><mi>i</mi><mi>b</mi></msubsup></math> 为组合与基准中资产 <math class="math-inline" aria-label="i"><mi>i</mi></math> 的权重，<math class="math-inline" aria-label="r i p"><msubsup><mi>r</mi><mi>i</mi><mi>p</mi></msubsup></math>、<math class="math-inline" aria-label="r i b"><msubsup><mi>r</mi><mi>i</mi><mi>b</mi></msubsup></math> 为其组合与基准收益。三者相加即组合相对基准的总超额收益。</p>
+            </div>
+        </div>
+
+        <pre style="overflow-x:auto"><code># Brinson归因分解计算公式
         # 假设有两类资产：股票和债券
         # 基准权重：股票60%，债券40%
         # 实际权重：股票65%，债券35%
@@ -201,6 +218,36 @@
         #    总交互效应 = 0.125%
 
         # 总超额收益 = 0.35% + 1.0% + 0.125% = 1.475%</code></pre>
+
+        <figure>
+            <svg role="img" aria-labelledby="brinson-title brinson-desc" viewBox="0 0 840 330" xmlns="http://www.w3.org/2000/svg">
+                <title id="brinson-title">Brinson 归因瀑布图：配置、选股与交互效应</title>
+                <desc id="brinson-desc">从零开始，配置效应贡献 0.35%，选股效应贡献 1.0%，交互效应贡献 0.125%，累计得到 1.475% 的总超额收益。</desc>
+                <rect width="840" height="330" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <line x1="90" y1="280" x2="790" y2="280" stroke="#94a3b8" stroke-width="1.5"/>
+                    <text x="435" y="320" font-size="13" fill="#53676d" text-anchor="middle">超额收益来源（百分点）</text>
+                    <rect x="150" y="231.9" width="90" height="48.1" fill="#7461ba" rx="3"/>
+                    <rect x="280" y="94.4" width="90" height="137.5" fill="#2563b8" rx="3"/>
+                    <rect x="410" y="77.2" width="90" height="17.2" fill="#d06d4d" rx="3"/>
+                    <rect x="540" y="77.2" width="90" height="202.8" fill="#1e3a5f" rx="3"/>
+                    <line x1="240" y1="231.9" x2="280" y2="231.9" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4"/>
+                    <line x1="370" y1="94.4" x2="410" y2="94.4" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4"/>
+                    <line x1="500" y1="77.2" x2="540" y2="77.2" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4"/>
+                    <g font-size="12.5" fill="#1e293b" text-anchor="middle">
+                        <text x="195" y="225">+0.35</text>
+                        <text x="325" y="88">+1.00</text>
+                        <text x="455" y="70">+0.13</text>
+                        <text x="585" y="70">= 1.475</text>
+                        <text x="195" y="300">配置效应</text>
+                        <text x="325" y="300">选股效应</text>
+                        <text x="455" y="300">交互效应</text>
+                        <text x="585" y="300">总超额收益</text>
+                    </g>
+                </g>
+            </svg>
+            <figcaption><strong>图 15-1</strong>　Brinson 归因的瀑布图。前三个柱子分别对应配置效应、选股效应与交互效应，逐项累加到最后一个柱子（总超额收益）。图中数值对应本节示例参数（股票/债券两资产），属<strong>教学示意</strong>，未考虑交易成本与现金拖累。</figcaption>
+        </figure>
 
         <p>这个分解非常实用。如果发现超额收益主要来自选股效应，说明你的研究员和基金经理在创造价值；如果主要来自配置效应，说明你的宏观和TAA团队在起作用；如果两个都是负的——那你可能需要认真反思投资流程本身了。</p>
 
@@ -225,6 +272,8 @@
             <strong>对个人投资者的借鉴：</strong>机构的投资组合管理流程听起来复杂，但核心逻辑完全适用于个人。你也可以为自己制定一份简化版"IPS"——明确投资目标、约束、风险承受能力；设定你的"战略配置"（如股债六四开）；设定再平衡规则（如每年调一次或偏离超过10%时调整）；每季度做一次简单的业绩归因。这个"迷你投资流程"会让你超越90%的散户。
         </div>
 
+        <p class="eq-label">说明：本章的资产收益、波动率、相关性、权重上限与案例金额（如养老金持仓、归因示例参数、权益上限等）均为公开报道的近似值与本课程<strong>教学示意</strong>，仅用于展示量级与方向，未逐笔核验；具体的监管比例与配置参数请以监管规定与机构文件的最新披露为准。</p>
+
         <p>投资组合管理是贯穿整个投资生涯的"操作系统"。从制定IPS到SAA再到TAA，从再平衡到归因分析，每一步都是纪律性和专业性的体现。下一章，我们将深入探讨投资组合管理中最令人"头疼"但又最关键的部分——<strong>风险管理</strong>。你会学到如何用数学语言描述风险、如何防范极端事件、以及如何在"黑天鹅"来临时保护你的投资组合。</p>
 
         <div class="footer-nav">
@@ -232,7 +281,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="16.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
