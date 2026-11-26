@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第13章 固定收益策略</h2>
+        <h1>第13章 固定收益策略</h1>
 
         <p>2022年11月，中国债市经历了一场"惊魂一周"。10年期国债收益率在短短5个交易日内从2.64%飙升到2.84%，债券价格暴跌，超过1000只银行理财产品出现破净（净值跌破1元）。一位购买了某R2级（稳健型）理财产品的阿姨冲进银行网点，情绪激动地说："这是R2！说好的稳健理财呢？怎么亏了2%？"</p>
 
@@ -61,7 +63,7 @@
         <h3>纯预期理论（Pure Expectations Theory）</h3>
         <p>长期利率等于市场对未来短期利率的预期。如果市场预期未来利率会上升，收益率曲线向上倾斜；如果预期利率下降，曲线向下倾斜（倒挂）。</p>
 
-        <pre><code># 纯预期理论下的远期利率计算
+        <pre style="overflow-x:auto"><code># 纯预期理论下的远期利率计算
 # 假设：1年期即期利率 = 2.0%，2年期即期利率 = 2.5%
 
 # 隐含的1年后1年期远期利率 f(1,2)：
@@ -104,7 +106,22 @@
         <h3>美元久期（Dollar Duration）</h3>
         <p>利率变化1个百分点时，债券价值的货币变动金额。这在组合层面非常有用。</p>
 
-        <pre><code># 久期的计算与含义
+        <div class="math-equation" role="group" aria-label="久期定义与组合久期公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="久期定义与组合久期公式，可横向滚动">
+                <math display="block" aria-label="麦考利久期等于各期时间乘现值的加权和除以债券价格">
+                    <mrow><mi>D</mi><mo>=</mo><mfrac><mrow><munder><mo>∑</mo><mi>t</mi></munder><mi>t</mi><mo>⋅</mo><mfrac><msub><mi>CF</mi><mi>t</mi></msub><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>y</mi><mo>)</mo></mrow><mi>t</mi></msup></mfrac></mrow><mi>P</mi></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="修正久期等于麦考利久期除以一加到期收益率">
+                    <mrow><msup><mi>D</mi><mo>∗</mo></msup><mo>=</mo><mfrac><mi>D</mi><mrow><mn>1</mn><mo>+</mo><mi>y</mi></mrow></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="组合久期等于各债券市值权重乘以其久期之和">
+                    <mrow><msub><mi>D</mi><mtext>组合</mtext></msub><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>w</mi><mi>i</mi></msub><msub><mi>D</mi><mi>i</mi></msub></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="CF t"><msub><mi>CF</mi><mi>t</mi></msub></math> 为第 <math class="math-inline" aria-label="t"><mi>t</mi></math> 期现金流，<math class="math-inline" aria-label="y"><mi>y</mi></math> 为到期收益率，<math class="math-inline" aria-label="w i"><msub><mi>w</mi><mi>i</mi></msub></math> 为各债券的市值权重。组合久期是各只债券久期的市值加权平均，这是利率风险管理的基础。</p>
+            </div>
+        </div>
+
+        <pre style="overflow-x:auto"><code># 久期的计算与含义
 # 假设：面值100元，票息3%，5年期，到期收益率2.8%
 
 # 修正久期 ≈ 4.6年
@@ -131,7 +148,16 @@
 
         <p><strong>凸性（Convexity）</strong>是一个"好消息"——它是正面的属性。凸性越高，债券对持有者越有利。但<strong>负凸性（Negative Convexity）</strong>是存在的：可赎回债券（Callable Bond）的发行人有提前赎回的权利，因此当利率下降时，债券价格被赎回风险"压制"，上涨幅度少于普通债券。</p>
 
-        <pre><code># 包含凸性调整的价格变动公式
+        <div class="math-equation" role="group" aria-label="含凸性修正的债券价格变动公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="含凸性修正的债券价格变动公式，可横向滚动">
+                <math display="block" aria-label="价格变动率约等于负修正久期乘以利率变动加上二分之一凸性乘以利率变动平方">
+                    <mrow><mfrac><mrow><mi>Δ</mi><mi>P</mi></mrow><mi>P</mi></mfrac><mo>≈</mo><mo>−</mo><msup><mi>D</mi><mo>∗</mo></msup><mi>Δ</mi><mi>y</mi><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>C</mi><msup><mrow><mo>(</mo><mi>Δ</mi><mi>y</mi><mo>)</mo></mrow><mn>2</mn></msup></mrow>
+                </math>
+                <p class="eq-label">第一项是久期的线性近似，第二项是凸性修正。当 <math class="math-inline" aria-label="Delta y"><mi>Δ</mi><mi>y</mi></math> 为负（利率下行）时，平方项为正，实际涨幅大于久期预测；反之亦然——这就是“凸性对持有者有利”。</p>
+            </div>
+        </div>
+
+        <pre style="overflow-x:auto"><code># 包含凸性调整的价格变动公式
 # ΔP/P ≈ -MD × Δy + (1/2) × C × (Δy)²
 
 # 其中：
@@ -144,6 +170,30 @@
 #       = 0.05 + 0.00175 = 5.175%
 # 如果不考虑凸性：只有5.0%
 # 凸性让债券多涨了0.175%，这是一个"免费赠送"的好处</code></pre>
+
+        <figure>
+            <svg role="img" aria-labelledby="conv-title conv-desc" viewBox="0 0 840 320" xmlns="http://www.w3.org/2000/svg">
+                <title id="conv-title">债券价格与利率的关系：凸性曲线与久期切线</title>
+                <desc id="conv-desc">债券价格随利率上升而下降，但曲线向下凸出；久期给出的切线是线性近似，实际曲线总是位于切线之上，利率下行时多涨、上行时少跌。</desc>
+                <rect width="840" height="320" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <line x1="90" y1="300" x2="790" y2="300" stroke="#94a3b8" stroke-width="1.5"/>
+                    <line x1="90" y1="55" x2="90" y2="300" stroke="#94a3b8" stroke-width="1.5"/>
+                    <text x="435" y="314" font-size="13" fill="#53676d" text-anchor="middle">到期收益率（%）</text>
+                    <text x="30" y="180" font-size="13" fill="#53676d" text-anchor="middle" transform="rotate(-90 30 180)">债券价格（元）</text>
+                    <line x1="90" y1="86.4" x2="780" y2="295.6" stroke="#d06d4d" stroke-width="2" stroke-dasharray="7 5"/>
+                    <polyline fill="none" stroke="#2563b8" stroke-width="3" points="90,69 205,108.2 320,147.4 435,191 550,225.9 665,256.4 780,282.6"/>
+                    <circle cx="435" cy="191" r="6" fill="#7461ba"/>
+                    <line x1="435" y1="191" x2="435" y2="300" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 3"/>
+                    <text x="427" y="316" font-size="12" fill="#5f4f9a" text-anchor="end">当前 y=4%</text>
+                    <line x1="470" y1="120" x2="500" y2="120" stroke="#2563b8" stroke-width="3"/>
+                    <text x="506" y="125" font-size="13" fill="#1e293b">实际价格（凸）</text>
+                    <line x1="470" y1="142" x2="500" y2="142" stroke="#d06d4d" stroke-width="3" stroke-dasharray="7 5"/>
+                    <text x="506" y="147" font-size="13" fill="#1e293b">久期预测（切线）</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 13-1</strong>　凸性：价格—利率曲线的弯曲。蓝色实线是债券价格的真实关系，红色虚线是用久期做的一阶线性近似。曲线向下凸出，始终位于切线<strong>上方</strong>，因此利率下行时实际涨幅大于久期预测、利率上行时跌幅小于预测。曲线数值为单一假设债券的<strong>教学示意</strong>。</figcaption>
+        </figure>
 
         <h2>13.4 信用分析</h2>
 
@@ -169,7 +219,7 @@
         <h3>信用迁移矩阵</h3>
         <p>评级机构（穆迪、标普、惠誉、中国的大公国际等）会定期发布信用迁移矩阵，显示不同评级的企业在一年后迁移到不同评级的概率：</p>
 
-        <pre><code># 信用迁移矩阵示例（标普，1年期，%）
+        <pre style="overflow-x:auto"><code># 信用迁移矩阵示例（标普，1年期，%）
 #         AAA    AA     A     BBB    BB     B     CCC    D
 # AAA     92.5   6.8   0.6   0.1    0.0    0.0   0.0   0.0
 # AA      0.5   90.3   7.8   1.2    0.1    0.1   0.0   0.0
@@ -245,6 +295,8 @@
             </ul>
         </div>
 
+        <p class="eq-label">说明：本章的规模、收益率、利差、久期与案例金额（如债市存量、理财破净数量、雷曼与货币基金事件、迁移矩阵与利差指标等）均为公开报道的近似值与本课程<strong>教学示意</strong>，仅用于展示量级与方向，未逐笔核验；具体数据请以交易所、评级机构与监管文件的最新披露为准。</p>
+
         <p>固定收益策略的核心是在利率风险和信用风险之间找到平衡。与债券不同，股票投资的挑战在于如何判断一家公司的"真实价值"。从资产证券化的定价逻辑中，你可能会感受到"估值"这门艺术的微妙之处。下一章——<strong>权益估值</strong>，我们将系统学习给一家公司"定价"的各种方法，从股利贴现模型到相对估值法，再到中国A股的估值实践。</p>
 
         <div class="footer-nav">
@@ -252,7 +304,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="14.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
