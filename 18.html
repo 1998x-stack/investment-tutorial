@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第18章 ESG与可持续投资</h2>
+        <h1>第18章 ESG与可持续投资</h1>
 
         <p>假设你面前有两个公司：A公司每年赚20亿利润，但排放了大量的二氧化碳，工人工作环境恶劣，董事会里全是"自己人"；B公司每年赚15亿，但它是碳中和管理者、被评为"最佳雇主"、董事会中有40%的独立董事和30%的女性成员。你会选哪个？</p>
 
@@ -65,6 +67,32 @@
         <h2>18.1 ESG三大支柱</h2>
 
         <p>ESG不是一个模糊的概念，而是包含三个明确维度的评价体系：</p>
+
+        <figure>
+            <svg role="img" aria-labelledby="esg-title esg-desc" viewBox="0 0 840 340" xmlns="http://www.w3.org/2000/svg">
+                <title id="esg-title">ESG 三大支柱：环境、社会与治理</title>
+                <desc id="esg-desc">环境（E）关注碳排与资源，社会（S）关注员工与供应链，治理（G）关注董事会与股东权利；三者共同构成 ESG 评价体系。</desc>
+                <rect width="840" height="340" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <rect x="60" y="70" width="230" height="230" rx="14" fill="#e6f4ea" stroke="#2f855a" stroke-width="2"/>
+                    <rect x="305" y="70" width="230" height="230" rx="14" fill="#e0edfa" stroke="#2563b8" stroke-width="2"/>
+                    <rect x="550" y="70" width="230" height="230" rx="14" fill="#ece7fa" stroke="#7461ba" stroke-width="2"/>
+                    <text x="175" y="106" font-size="17" font-weight="600" fill="#2f855a" text-anchor="middle">E 环境</text>
+                    <text x="420" y="106" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">S 社会</text>
+                    <text x="665" y="106" font-size="17" font-weight="600" fill="#5f4f9a" text-anchor="middle">G 治理</text>
+                    <g font-size="13.5" fill="#1e293b">
+                        <text x="82" y="146">• 碳排放强度</text><text x="82" y="176">• 资源与能耗</text>
+                        <text x="82" y="206">• 污染与废物</text><text x="82" y="236">• 生物多样性</text>
+                        <text x="327" y="146">• 员工权益</text><text x="327" y="176">• 产品与数据安全</text>
+                        <text x="327" y="206">• 供应链劳工标准</text><text x="327" y="236">• 社区关系</text>
+                        <text x="572" y="146">• 董事会独立性</text><text x="572" y="176">• 股东权利</text>
+                        <text x="572" y="206">• 高管薪酬挂钩</text><text x="572" y="236">• 反腐败与合规</text>
+                    </g>
+                    <text x="420" y="330" font-size="12.5" fill="#53676d" text-anchor="middle">E、S、G 不是三个孤立分数，而是风险与机会的三个棱镜</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 18-1</strong>　ESG 三大支柱。E（环境）衡量企业对自然系统的影响，S（社会）衡量对人与社区的影响，G（治理）衡量权力与利益的制衡机制。分类为一般性<strong>教学示意</strong>，具体指标权重因评级机构而异。</figcaption>
+        </figure>
 
         <h3>E —— 环境（Environmental）</h3>
         <p>评估企业在环境保护方面的表现：</p>
@@ -137,7 +165,19 @@
         <h3>ESG整合（ESG Integration）</h3>
         <p>这是目前主流机构最常使用的方法——不是简单筛选，而是将ESG因素系统性地纳入传统的财务分析和估值模型中。例如，在DCF模型中调高碳排放强度高的公司的资本成本（因为其面临更高的碳税风险和监管风险），或者在估值比较中给ESG评分高的公司一个"溢价乘数"。</p>
 
-        <pre><code># ESG因素如何影响DCF估值的示例
+        <div class="math-equation" role="group" aria-label="ESG 调整后的折现率公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="ESG 调整后的折现率公式，可横向滚动">
+                <math display="block" aria-label="调整后加权平均资本成本等于基准WACC加ESG风险溢价加碳风险溢价乘碳强度">
+                    <mrow><msub><mi>WACC</mi><mtext>adj</mtext></msub><mo>=</mo><msub><mi>WACC</mi><mtext>base</mtext></msub><mo>+</mo><msub><mi>π</mi><mtext>esg</mtext></msub><mo>+</mo><mi>λ</mi><mo>⋅</mo><mi>CI</mi></mrow>
+                </math>
+                <math display="block" aria-label="DCF终值等于最后一年自由现金流乘以一加增长率除以折现率减增长率">
+                    <mrow><mi>TV</mi><mo>=</mo><mfrac><mrow><msub><mi>FCF</mi><mi>n</mi></msub><mo>⋅</mo><mo>(</mo><mn>1</mn><mo>+</mo><mi>g</mi><mo>)</mo></mrow><mrow><mi>WACC</mi><mo>−</mo><mi>g</mi></mrow></mfrac></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="pi esg"><msub><mi>π</mi><mtext>esg</mtext></msub></math> 为由 ESG 评级映射的风险溢价，<math class="math-inline" aria-label="CI"><mi>CI</mi></math> 为碳排放强度，<math class="math-inline" aria-label="lambda"><mi>λ</mi></math> 为碳风险系数。ESG 风险通过抬高折现率压低现值，同时 ESG 优势也可能延长高增长期 <math class="math-inline" aria-label="g"><mi>g</mi></math>，两条路径共同改变估值。</p>
+            </div>
+        </div>
+
+        <pre style="overflow-x:auto"><code># ESG因素如何影响DCF估值的示例
         class ESGAdjustedDCF:
             def __init__(self, company_name, esg_score, co2_intensity):
                 self.name = company_name
@@ -256,6 +296,8 @@
             <strong>客观评价ESG：</strong>ESG投资既不是"拯救世界的灵丹妙药"，也不是"金融界的骗局"。它是一个仍在快速演进中的投资方法——有价值（尤其是风险管理的角度），但也有缺陷（评级不统一、漂绿等问题）。对投资者来说，最好的态度是：<strong>了解ESG，运用ESG，但不要迷信ESG</strong>。把ESG信息作为你投资决策中"信息增量"的一部分，而不是"替代所有传统分析"的万能工具。
         </div>
 
+        <p class="eq-label">说明：本章的规模、评级相关系数、绿色溢价与案例金额（如 ESG 资产规模、绿色债券市场、罚款金额、双碳投资测算等）均为公开报道的近似值与本课程<strong>教学示意</strong>，仅用于展示量级与方向，未逐笔核验；具体口径请以评级机构方法与监管文件的最新披露为准。</p>
+
         <p>ESG投资让我们看到，投资不仅关乎"回报率"，也关乎"价值观"。在一个全球气温升高、社会不平等加剧的时代，越来越多的人开始思考："我的钱在哪里，我的价值观就在哪里。"从更务实的角度看，将ESG因素纳入投资决策——无论是对冲监管风险、识别"棕色转绿色"的转型机会，还是满足客户的价值观需求——都已经成为现代投资管理中不可回避的能力。</p>
 
         <p>下一章，我们将进入衍生品世界中最精妙也最复杂的领域——<strong>期权定价与策略</strong>。从Black-Scholes模型到期权组合策略，你会发现期权不仅是套利的工具，更是管理风险和获取不对称收益的"瑞士军刀"。</p>
@@ -265,7 +307,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="19.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
