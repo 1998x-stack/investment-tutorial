@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +42,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第21章 国际投资</h2>
+        <h1>第21章 国际投资</h1>
 
         <p>如果你只投资A股，意味着你放弃了全球超过80%的可投资资产。美国有苹果和英伟达，日本有丰田和索尼，欧洲有LVMH和SAP，印度有Reliance和Infosys。每一个市场都有其独特的产业优势和增长动力。国际投资的核心问题不是"要不要出去"，而是"怎么出去"。</p>
 
@@ -70,7 +72,7 @@
             <li><strong>协方差效应：</strong>本地收益和汇率变动的交互影响</li>
         </ul>
 
-        <pre><code># 国际投资总收益分解
+        <pre style="overflow-x:auto"><code># 国际投资总收益分解
 # 假设你投资美股标普500指数基金
 # 以人民币计价的年化收益率 = ?
 
@@ -87,6 +89,45 @@
 # R_CNY = (1 + 0.10) × (1 - 0.03) - 1 = 0.067 = 6.7%</code></pre>
 
         <p>从分解中可以看到，即使本地收益完全相同，不同货币计价的回报可能天差地别。这也是为什么国际投资者必须管理汇率风险。</p>
+
+        <div class="math-equation" role="group" aria-label="国际投资收益分解与汇率平价公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="国际投资收益分解与汇率平价公式，可横向滚动">
+                <math display="block" aria-label="本币总收益等于一加本地收益乘以一加汇率收益再减一">
+                    <mrow><msub><mi>R</mi><mtext>CNY</mtext></msub><mo>=</mo><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>R</mi><mtext>local</mtext></msub><mo>)</mo><mo>×</mo><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>R</mi><mtext>fx</mtext></msub><mo>)</mo><mo>−</mo><mn>1</mn></mrow>
+                </math>
+                <math display="block" aria-label="利率平价：远期汇率除以即期汇率等于一加本币利率除以一加外币利率">
+                    <mrow><mfrac><mi>F</mi><mi>S</mi></mfrac><mo>=</mo><mfrac><mrow><mn>1</mn><mo>+</mo><msub><mi>r</mi><mi>d</mi></msub></mrow><mrow><mn>1</mn><mo>+</mo><msub><mi>r</mi><mi>f</mi></msub></mrow></mfrac></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="R local"><msub><mi>R</mi><mtext>local</mtext></msub></math> 为以外币计价的本地收益，<math class="math-inline" aria-label="R fx"><msub><mi>R</mi><mtext>fx</mtext></msub></math> 为外币兑本币的变动率；<math class="math-inline" aria-label="F S"><mfrac><mi>F</mi><mi>S</mi></mfrac></math> 为远期/即期汇率，<math class="math-inline" aria-label="r d"><msub><mi>r</mi><mi>d</mi></msub></math>、<math class="math-inline" aria-label="r f"><msub><mi>r</mi><mi>f</mi></msub></math> 分别为本币与外币利率。</p>
+            </div>
+        </div>
+
+        <figure>
+            <svg role="img" aria-labelledby="fx-title fx-desc" viewBox="0 0 840 320" xmlns="http://www.w3.org/2000/svg">
+                <title id="fx-title">汇率变动如何改变以人民币计价的总收益</title>
+                <desc id="fx-desc">在本地美元收益固定为 10% 的前提下，汇率从贬值 10% 到升值 10%，以人民币计价的总收益从约 -1% 近似线性升至约 21%。</desc>
+                <rect width="840" height="320" rx="18" fill="#f7fafc"/>
+                <g font-family="system-ui, 'PingFang SC', sans-serif">
+                    <line x1="120" y1="270" x2="790" y2="270" stroke="#94a3b8" stroke-width="1.5"/>
+                    <line x1="120" y1="50" x2="120" y2="270" stroke="#94a3b8" stroke-width="1.5"/>
+                    <text x="455" y="306" font-size="13" fill="#53676d" text-anchor="middle">美元兑人民币变动 R_fx（%）</text>
+                    <text x="30" y="160" font-size="13" fill="#53676d" text-anchor="middle" transform="rotate(-90 30 160)">人民币计价收益（%）</text>
+                    <line x1="120" y1="148.8" x2="790" y2="148.8" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 4"/>
+                    <text x="640" y="142" font-size="11" fill="#94a3b8">本地收益 10%</text>
+                    <polyline fill="none" stroke="#2563b8" stroke-width="3" points="120,237.7 280,193.3 440,148.8 600,104.4 760,60"/>
+                    <g fill="#2563b8">
+                        <circle cx="120" cy="237.7" r="5"/><circle cx="280" cy="193.3" r="5"/>
+                        <circle cx="440" cy="148.8" r="5"/><circle cx="600" cy="104.4" r="5"/>
+                        <circle cx="760" cy="60" r="5"/>
+                    </g>
+                    <circle cx="440" cy="148.8" r="9" fill="none" stroke="#d06d4d" stroke-width="3"/>
+                    <text x="452" y="134" font-size="12" fill="#b0502f">不对冲基准 R_fx = 0</text>
+                    <text x="128" y="228" font-size="12" fill="#1e293b">约 −1%</text>
+                    <text x="698" y="52" font-size="12" fill="#1e293b">约 +21%</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 21-1</strong>　汇率敞口对总收益的放大效应。图中固定本地美元收益为 10%，横轴为美元兑人民币的变动率，纵轴为换算后的人民币收益。由于总收益是两个因子的乘积，汇率不是可忽略的“噪声”，而是与本地收益同量级的一个因子。曲线数值由公式 <math class="math-inline" aria-label="R CNY"><msub><mi>R</mi><mtext>CNY</mtext></msub></math> = (1+R_local)(1+R_fx)−1 计算，本地收益取 10% 属<strong>教学示意</strong>。</figcaption>
+        </figure>
 
         <h2>21.2 汇率风险</h2>
 
@@ -118,6 +159,7 @@
 
         <p><strong>征收风险（Expropriation Risk）：</strong>政府直接没收外国投资者的资产。虽然20世纪70年代后大规模的征收已很少见，但"隐性征收"——如突然增加税收、取消牌照、强制国有化——仍然存在。委内瑞拉和阿根廷是近年来的典型案例。</p>
 
+        <div class="table-wrap" style="overflow-x:auto" role="region" aria-label="国家风险类型表，可横向滚动" tabindex="0">
         <table>
             <thead>
                 <tr><th>风险类型</th><th>典型事件</th><th>对投资的影响</th><th>缓解方式</th></tr>
@@ -129,6 +171,7 @@
                 <tr><td>货币危机</td><td>1997年亚洲金融危机</td><td>股市暴跌+货币贬值双重打击</td><td>汇率对冲、买入避险货币资产</td></tr>
             </tbody>
         </table>
+        </div>
 
         <h2>21.4 国际分散化收益</h2>
 
@@ -168,6 +211,7 @@
 
         <p><strong>新兴市场：</strong>印度是当前最受关注的新兴市场——GDP增速超过6%，人口结构年轻，莫迪政府的"印度制造"政策推动制造业发展。巴西和墨西哥受益于"近岸外包"（Nearshoring）趋势。但新兴市场普遍具有高波动、高政治风险、弱法治环境的共性。</p>
 
+        <div class="table-wrap" style="overflow-x:auto" role="region" aria-label="全球市场风险收益特征表，可横向滚动" tabindex="0">
         <table>
             <thead>
                 <tr><th>市场</th><th>代表性指数</th><th>2020-2025年化回报</th><th>PE(TTM)</th><th>核心行业</th></tr>
@@ -181,10 +225,13 @@
                 <tr><td>巴西</td><td>IBOVESPA</td><td>约8%</td><td>9x</td><td>大宗商品、金融</td></tr>
             </tbody>
         </table>
+        </div>
 
         <div class="highlight">
             <strong>全球组合参考配置：</strong>对一位中国普通投资者，一个"起步级"的全球配置可以是：40% A股/港股 + 30% 美股（通过QDII）+ 15% 日股/欧股 + 10% 新兴市场 + 5% 全球债券。这个组合在中国的QDII框架下完全可以实现。当然，具体的配置比例要根据你的风险承受能力和投资目标来决定。
         </div>
+
+        <p class="eq-label">说明：本章的市场年化回报、PE、相关性、波动率与资金规模（如 MSCI 纳入带来的资金流、QDII 规模、各国指数回报等）均为公开报道的近似值与本课程<strong>教学示意</strong>，仅用于展示量级与方向，未逐笔核验；具体数据请以 MSCI、各国交易所与基金定期报告的最新披露为准。</p>
 
         <p>国际投资不仅仅是"多买几个国家的股票"这么简单。它要求你理解汇率、政治、法律、税收等多重维度的复杂性。但回报也是丰厚的——你不再把所有希望寄托在单一国家的经济命运上，而是分享全球创新的红利。</p>
 
@@ -195,7 +242,8 @@
             <a href="index.html">📖 返回目录</a>
             <a href="22.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
