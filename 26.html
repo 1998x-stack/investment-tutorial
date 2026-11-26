@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第26章 机器学习在投资中的应用</title>
     <link rel="stylesheet" href="theme.css">
+    <style>pre{overflow-x:auto;}</style>
 </head>
 <body>
+<a class="skip-link" href="#content">跳转至正文</a>
 <div class="double-border">
 <div class="container">
-    <div class="sidebar">
+    <nav class="sidebar" aria-label="课程目录">
         <h3>📈 课程目录</h3>
         <ul class="chapter-list">
             <li><a href="01.html">第1章 投资学导论</a></li>
@@ -41,10 +43,11 @@
             <li><a href="27.html">第27章 投资学前沿</a></li>
             <li><a href="28.html">第28章 综合实战项目</a></li>
         </ul>
-    </div>
-    <div class="main-content">
+    </nav>
+    <main class="main-content" id="content">
+    <article>
 
-        <h2>第26章 机器学习在投资中的应用</h2>
+        <h1>第26章 机器学习在投资中的应用</h1>
 
         <p>2020年3月，新冠疫情引发的市场恐慌达到顶峰，一家名叫"Two Sigma"的对冲基金却在悄悄加仓。当散户们争相抛售时，他们的机器模型识别到了一个异常信号：社交媒体上关于"洗手液"的负面情绪达到历史极值，而医疗股的技术面却出现罕见的买入背离。最终，这只基金在2020年获得了超过20%的净回报。不是说"机器取代人"——而是说，机器能看到人看不见的模式。</p>
 
@@ -59,6 +62,39 @@
         <div class="warning">
             <strong>惨痛教训：</strong>机器学习在投资中最大的陷阱不是模型不够先进，而是<strong>过拟合（Overfitting）</strong>和<strong>数据泄露（Data Leakage）</strong>。如果你的回测曲线完美到不真实，那它大概率就是假的。
         </div>
+
+        <figure>
+            <svg role="img" aria-labelledby="ml-title ml-desc" viewBox="0 0 840 300" xmlns="http://www.w3.org/2000/svg">
+                <title id="ml-title">投资机器学习的建模流水线</title>
+                <desc id="ml-desc">原始数据、特征工程、时序交叉验证、样本外测试、组合执行五个阶段单向衔接，时序验证必须避免随机划分以防未来数据泄露。</desc>
+                <rect width="840" height="300" rx="18" fill="#f7fafc"/>
+                <defs><marker id="ml-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#94a3b8"/></marker></defs>
+                <g font-family="system-ui, 'PingFang SC', sans-serif" font-size="13.5" fill="#1e293b">
+                    <rect x="30" y="80" width="145" height="112" rx="12" fill="#e0edfa" stroke="#2563b8" stroke-width="2"/>
+                    <rect x="195" y="80" width="145" height="112" rx="12" fill="#e6f4ea" stroke="#2f855a" stroke-width="2"/>
+                    <rect x="360" y="80" width="145" height="112" rx="12" fill="#fdf3e0" stroke="#b7791f" stroke-width="2"/>
+                    <rect x="525" y="80" width="145" height="112" rx="12" fill="#ece7fa" stroke="#7461ba" stroke-width="2"/>
+                    <rect x="690" y="80" width="145" height="112" rx="12" fill="#fde8e8" stroke="#c53030" stroke-width="2"/>
+                    <g text-anchor="middle" font-weight="600">
+                        <text x="102" y="112">① 原始数据</text><text x="267" y="112">② 特征工程</text>
+                        <text x="432" y="112">③ 时序验证</text><text x="597" y="112">④ 样本外测试</text><text x="762" y="112">⑤ 组合执行</text>
+                    </g>
+                    <g text-anchor="middle" font-size="12" fill="#475569">
+                        <text x="102" y="142">价量·财报·文本</text><text x="102" y="164">另类数据</text>
+                        <text x="267" y="142">正交化与去极值</text><text x="267" y="164">经济学含义优先</text>
+                        <text x="432" y="142">扩展 / 滚动窗口</text><text x="432" y="164">禁止随机 K 折</text>
+                        <text x="597" y="142">保留最后一段</text><text x="597" y="164">开发完成才可看</text>
+                        <text x="762" y="142">扣交易成本</text><text x="762" y="164">风险调整后评估</text>
+                    </g>
+                    <g stroke="#94a3b8" stroke-width="2" fill="none">
+                        <path d="M175 136 H195" marker-end="url(#ml-arrow)"/><path d="M340 136 H360" marker-end="url(#ml-arrow)"/>
+                        <path d="M505 136 H525" marker-end="url(#ml-arrow)"/><path d="M670 136 H690" marker-end="url(#ml-arrow)"/>
+                    </g>
+                    <text x="420" y="235" text-anchor="middle" font-size="12.5" fill="#b91c1c">③→⑤ 的每一段若与训练集重叠，回测再漂亮也是数据泄露，这正是 LSTM“水晶球”翻车的根源</text>
+                </g>
+            </svg>
+            <figcaption><strong>图 26-1</strong>　投资机器学习的建模流水线。与普通预测任务最大的区别在于第三、四阶段：金融时间序列必须按时间切分（扩展或滚动窗口），并保留一段完全不参与开发的样本外数据。流程划分为一般性<strong>教学示意</strong>，具体做法因策略而异。</figcaption>
+        </figure>
 
         <h2>26.1 NLP情感分析：让机器读懂市场情绪</h2>
 
@@ -233,12 +269,15 @@ def dfpm_step(state, factor_models):
 
         <p>掌握了机器学习工具，你相当于给投资能力装上了"引擎"。但引擎再强，也需要方向盘和刹车——这就是我们下一章要讨论的<strong>投资学前沿</strong>，包括加密货币、DeFi、高频交易和另类数据等最新发展。它们既是机遇，也是风险。准备好了吗？</p>
 
+        <p class="eq-label">说明：本章提及的基金业绩、回测数字、因子数量与模型名称（如 Two Sigma、DFPM、AQR、Jane Street 等案例与年化收益 / 回撤幅度）均为公开报道的近似值与本课程<strong>教学示意</strong>，仅用于展示应用方向与量级，未逐笔核验；具体方法与实测结果请以对应论文、基金披露与官方发布为准。</p>
+
         <div class="footer-nav">
             <a href="25.html">← 上一章</a>
             <a href="index.html">📖 返回目录</a>
             <a href="27.html">下一章 →</a>
         </div>
-    </div>
+    </article>
+    </main>
 </div>
 </div>
 </body>
