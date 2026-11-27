@@ -167,6 +167,24 @@ print(aapl.info.keys())  # 查看可用的信息字段</code></pre>
         <h3>对数收益率：量化分析的标配</h3>
         <p>对数收益率 <code>r_t = ln(P_t / P_{t-1})</code> 在学术和量化实战中更常用，原因有三：第一，对数收益率具有时间可加性（多期收益率直接相加）；第二，对数收益率的分布更接近正态分布，方便统计建模；第三，在计算复合收益率时更精确。</p>
 
+        <div class="math-equation" role="group" aria-label="收益率与统计指标公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="收益率与统计指标公式，可以横向滚动">
+                <math display="block" aria-label="简单收益率等于本期价格减去上期价格，再除以上期价格">
+                    <mrow><msub><mi>R</mi><mi>t</mi></msub><mo>=</mo><mfrac><mrow><msub><mi>P</mi><mi>t</mi></msub><mo>−</mo><msub><mi>P</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><msub><mi>P</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="多期总收益率等于各期一加收益率连乘再减一">
+                    <mrow><msub><mi>R</mi><mtext>total</mtext></msub><mo>=</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mrow><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>R</mi><mi>i</mi></msub><mo>)</mo></mrow><mo>−</mo><mn>1</mn></mrow>
+                </math>
+                <math display="block" aria-label="对数收益率等于本期价格除以上期价格的自然对数">
+                    <mrow><msub><mi>r</mi><mi>t</mi></msub><mo>=</mo><mi>ln</mi><mfrac><msub><mi>P</mi><mi>t</mi></msub><msub><mi>P</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="夏普比率等于组合预期收益减去无风险利率再除以组合波动率">
+                    <mrow><mi>Sharpe</mi><mo>=</mo><mfrac><mrow><mi>E</mi><mo>[</mo><msub><mi>R</mi><mi>p</mi></msub><mo>]</mo><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub></mrow><msub><mi>σ</mi><mi>p</mi></msub></mfrac></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="R t"><msub><mi>R</mi><mi>t</mi></msub></math> 为简单收益率，<math class="math-inline" aria-label="r t"><msub><mi>r</mi><mi>t</mi></msub></math> 为对数收益率，<math class="math-inline" aria-label="r f"><msub><mi>r</mi><mi>f</mi></msub></math> 为无风险利率，<math class="math-inline" aria-label="sigma p"><msub><mi>σ</mi><mi>p</mi></msub></math> 为组合波动率。年化换算按每年 252 个交易日近似，为量化实战常见约定（本课程<strong>教学示意</strong>）。</p>
+            </div>
+        </div>
+
         <pre><code># 收益率计算实战
 import pandas as pd
 import numpy as np
@@ -198,6 +216,18 @@ print(f"最大回撤: {max_drawdown:.2%}")</code></pre>
 
         <h3>最小方差组合与最大夏普组合</h3>
         <p>给定一组资产的历史收益率数据，我们可以通过scipy.optimize来求解最优权重。具体来说：最小方差组合就是让组合波动率最小的权重分配；最大夏普组合是在给定无风险利率下，让单位风险获得的超额收益最大。</p>
+
+        <div class="math-equation" role="group" aria-label="组合优化目标公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="组合优化目标公式，可以横向滚动">
+                <math display="block" aria-label="组合方差等于权重向量的转置乘以协方差矩阵再乘以权重向量">
+                    <mrow><msubsup><mi>σ</mi><mi>p</mi><mn>2</mn></msubsup><mo>=</mo><msup><mi>w</mi><mi mathvariant="normal">T</mi></msup><mi>Σ</mi><mi>w</mi><mo>,</mo><mspace width="0.6em"/><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>w</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow>
+                </math>
+                <math display="block" aria-label="最大夏普组合是使夏普比率最大的权重，即组合超额收益除以组合波动率">
+                    <mrow><munder><mo>max</mo><mi>w</mi></munder><mfrac><mrow><msup><mi>w</mi><mi mathvariant="normal">T</mi></msup><mi>μ</mi><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub></mrow><msqrt><msup><mi>w</mi><mi mathvariant="normal">T</mi></msup><mi>Σ</mi><mi>w</mi></msqrt></mfrac></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="w"><mi>w</mi></math> 为组合权重向量，<math class="math-inline" aria-label="mu"><mi>μ</mi></math> 为各资产预期收益向量，<math class="math-inline" aria-label="Sigma"><mi>Σ</mi></math> 为收益率协方差矩阵，<math class="math-inline" aria-label="r f"><msub><mi>r</mi><mi>f</mi></msub></math> 为无风险利率。权重和为 1 且（可加）非负为常见约束。</p>
+            </div>
+        </div>
 
         <pre><code># 组合优化：有效前沿计算
 import numpy as np
