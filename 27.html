@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>第27章 投资学前沿</title>
     <link rel="stylesheet" href="theme.css">
-    <style>pre{overflow-x:auto;}</style>
+    <style>pre{overflow-x:auto;}.math-scroll{overflow-x:auto;}</style>
 </head>
 <body>
 <a class="skip-link" href="#content">跳转至正文</a>
@@ -110,6 +110,15 @@
 
         <p><strong>AMM做市（Automated Market Maker）。</strong>Uniswap首创的恒定乘积做市公式 x*y=k，让任何人都可以成为做市商。2025年，Uniswap的日均交易量已超过100亿美元，与Coinbase相当。但AMM有一个著名痛点——无常损失（Impermanent Loss）：当市场价格剧烈波动时，做市商可能比单纯持有资产亏得更多。</p>
 
+        <div class="math-equation" role="group" aria-label="恒定乘积做市公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="恒定乘积做市公式，可以横向滚动">
+                <math display="block" aria-label="两种代币储备量之积等于常数 k">
+                    <mrow><mi>x</mi><mo>·</mo><mi>y</mi><mo>=</mo><mi>k</mi></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="x"><mi>x</mi></math>、<math class="math-inline" aria-label="y"><mi>y</mi></math> 为资金池中两种代币的储备量，<math class="math-inline" aria-label="k"><mi>k</mi></math> 为常数。任何一笔交易后乘积必须保持不变，因此买入一方的同时会推高其相对价格 <math class="math-inline" aria-label="y 除以 x"><mfrac><mi>y</mi><mi>x</mi></mfrac></math>；这类定价曲线正是无常损失的来源。公式为 Uniswap 等恒定乘积 AMM 的标准设定。</p>
+            </div>
+        </div>
+
         <p><strong>流动性挖矿（Liquidity Mining）。</strong>2020年的DeFi Summer催生了"流动性挖矿"模式：用户向协议提供流动性，获得协议代币作为奖励。到了2026年，这种模式已经进化为"真实收益挖矿"——奖励不再是被通胀稀释的治理代币，而是协议产生的真实费用分红。</p>
 
         <p><strong>监管演变。</strong>2024年，美国SEC批准了比特币现货ETF，标志着加密货币正式进入主流投资组合。2025-2026年，欧盟的MiCA（加密资产市场监管框架）全面生效，新加坡和中国香港的虚拟资产牌照制度日趋成熟。对于投资者来说，合规化的最大好处是：你可以通过ETF或持牌交易所配置加密资产，而无需担心"交易所跑路"的风险。</p>
@@ -168,6 +177,18 @@
         <p><strong>1. 2025 Markowitz奖：PAPM（心理资产定价模型）。</strong>2025年度马科维茨奖（Markowitz Award）授予了一个基于行为金融学的新定价模型——PAPM（Psychological Asset Pricing Model）。该模型将投资者的"参考点依赖"（Reference Dependence）和"损失厌恶"（Loss Aversion）纳入了经典的CAPM框架。它成功解释了为什么低Beta股票在下跌市场中比传统定价模型预测的表现要好——因为投资者在熊市中倾向于"保险性"持仓，低Beta股票的"心理价值"上升。</p>
 
         <p><strong>2. 因果推断在资产定价中的应用。</strong>传统因子模型做的是相关性分析——发现某个因子与未来收益相关。但相关不等于因果。2025-2026年，越来越多的研究用因果推断（Causal Inference）方法——如DID（双重差分）、RDD（断点回归）、IV（工具变量）——来识别真正的因果因子。例如，一项研究发现，"获得ESG评级上调"本身并不导致股价上涨——只有当评级上调伴随着机构投资者增持时，股价才会涨。这意味着，真正的因果链条是"评级上调→机构增持→股价上涨"，而不是"评级上调→股价上涨"。</p>
+
+        <div class="math-equation" role="group" aria-label="双重差分（DID）估计公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="双重差分估计公式，可以横向滚动">
+                <math display="block" aria-label="结果变量等于截距加处理组、时期与两者交互项的系数，再加误差项">
+                    <mrow><mi>Y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>treated</mi><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mi>period</mi><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo>(</mo><mi>treated</mi><mo>×</mo><mi>period</mi><mo>)</mo></mrow><mo>+</mo><mi>ε</mi></mrow>
+                </math>
+                <math display="block" aria-label="双重差分估计量等于组内前后变化之差">
+                    <mrow><msub><mi>β</mi><mn>3</mn></msub><mo>=</mo><mrow><mo>[</mo><mi>E</mi><mo>(</mo><mi>Y</mi><mo>|</mo><mi>t</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>p</mi><mo>=</mo><mn>1</mn><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><mi>Y</mi><mo>|</mo><mi>t</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>p</mi><mo>=</mo><mn>0</mn><mo>)</mo><mo>]</mo></mrow><mo>−</mo><mrow><mo>[</mo><mi>E</mi><mo>(</mo><mi>Y</mi><mo>|</mo><mi>t</mi><mo>=</mo><mn>0</mn><mo>,</mo><mi>p</mi><mo>=</mo><mn>1</mn><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><mi>Y</mi><mo>|</mo><mi>t</mi><mo>=</mo><mn>0</mn><mo>,</mo><mi>p</mi><mo>=</mo><mn>0</mn><mo>)</mo><mo>]</mo></mrow></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="treated"><mi>treated</mi></math> 区分处理组与对照组，<math class="math-inline" aria-label="period"><mi>period</mi></math> 区分政策前后；<math class="math-inline" aria-label="beta 3"><msub><mi>β</mi><mn>3</mn></msub></math> 为交互项系数，即政策净效应。下面代码中 +3.2% 的系数为<strong>教学示意</strong>，仅示范方法，不代表真实实证结果。</p>
+            </div>
+        </div>
 
         <pre><code># 因果推断示意：DID双重差分法（Python伪代码）
 # 研究问题：沪深港通开通是否提升了标的股票的流动性？
