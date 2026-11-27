@@ -129,6 +129,18 @@
         <h3>ROE拆解：杜邦分析法的妙用</h3>
         <p>ROE（净资产收益率）是衡量行业盈利能力的核心指标。通过杜邦分解，我们可以看清ROE的来源：</p>
 
+        <div class="math-equation" role="group" aria-label="杜邦 ROE 分解公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="杜邦 ROE 分解公式，可以横向滚动">
+                <math display="block" aria-label="净资产收益率等于净利润除以净资产">
+                    <mrow><mi>ROE</mi><mo>=</mo><mfrac><mtext>净利润</mtext><mtext>净资产</mtext></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="等于净利润率乘以总资产周转率再乘以权益乘数">
+                    <mrow><mo>=</mo><mfrac><mtext>净利润</mtext><mtext>营业收入</mtext></mfrac><mo>×</mo><mfrac><mtext>营业收入</mtext><mtext>总资产</mtext></mfrac><mo>×</mo><mfrac><mtext>总资产</mtext><mtext>净资产</mtext></mfrac></mrow>
+                </math>
+                <p class="eq-label">三项依次为<strong>净利润率</strong>（盈利能力）、<strong>总资产周转率</strong>（运营效率）与<strong>权益乘数</strong>（财务杠杆）。同一个 ROE 可能来自完全不同的驱动结构——高净利率型（如白酒）、高周转型（如零售）或高杠杆型（如银行），因此必须结合行业属性解读。该分解为杜邦分析法的标准恒等变形。</p>
+            </div>
+        </div>
+
         <pre><code># ROE杜邦拆解
 # ROE = 净利润 / 净资产
 #     = (净利润/营业收入) × (营业收入/总资产) × (总资产/净资产)
@@ -199,6 +211,18 @@ elif avg_em > 2.5:
 
         <h3>DCF建模：自由现金流折现</h3>
         <p>DCF（Discounted Cash Flow）是所有估值模型的"真理标准"。它的逻辑很简单：一家公司的价值等于它未来所有自由现金流的现值之和。</p>
+
+        <div class="math-equation" role="group" aria-label="两阶段 DCF 估值公式">
+            <div class="math-scroll" data-math-scroll tabindex="0" role="region" aria-label="两阶段 DCF 估值公式，可以横向滚动">
+                <math display="block" aria-label="公司价值等于预测期自由现金流现值之和加上终值的现值">
+                    <mrow><mi>V</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mfrac><msub><mi>FCF</mi><mi>t</mi></msub><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mi>t</mi></msup></mfrac><mo>+</mo><mfrac><mi>TV</mi><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mi>n</mi></msup></mfrac></mrow>
+                </math>
+                <math display="block" aria-label="永续期终值等于下一期自由现金流除以折现率减永续增长率">
+                    <mrow><mi>TV</mi><mo>=</mo><mfrac><msub><mi>FCF</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mrow><mi>r</mi><mo>−</mo><mi>g</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><msub><mi>FCF</mi><mi>n</mi></msub><mo>(</mo><mn>1</mn><mo>+</mo><mi>g</mi><mo>)</mo></mrow><mrow><mi>r</mi><mo>−</mo><mi>g</mi></mrow></mfrac></mrow>
+                </math>
+                <p class="eq-label">其中 <math class="math-inline" aria-label="FCF t"><msub><mi>FCF</mi><mi>t</mi></msub></math> 为第 <math class="math-inline" aria-label="t"><mi>t</mi></math> 期自由现金流，<math class="math-inline" aria-label="r"><mi>r</mi></math> 为折现率（WACC），<math class="math-inline" aria-label="g"><mi>g</mi></math> 为永续增长率，且要求 <math class="math-inline" aria-label="r 大于 g"><mi>r</mi><mo>&gt;</mo><mi>g</mi></math>。永续期终值往往占总估值的大头，因此结果对 <math class="math-inline" aria-label="r 和 g"><mi>r</mi><mo>,</mo><mi>g</mi></math> 高度敏感，实践中必须做敏感性分析。</p>
+            </div>
+        </div>
 
         <pre><code># DCF估值模型（简化版）
 def dcf_valuation(fcf_0, growth_rate, discount_rate, terminal_growth, n_years=5):
